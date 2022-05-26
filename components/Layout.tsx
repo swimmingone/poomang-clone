@@ -1,6 +1,6 @@
 import React, { ReactChild, ReactChildren } from 'react';
 
-import Seo from './Seo';
+import Head from "next/head";
 
 interface Props {
 	children: ReactChild | ReactChildren;
@@ -8,7 +8,10 @@ interface Props {
 const Layout = ({ children }: Props) => {
 	return (
 		<>
-			<Seo />
+            <Head>
+                <title>너만의 우주, 푸망</title>
+                <link rel="icon" href="/favicon.jpg" />
+            </Head>
 			<div className={'flex justify-center'}>{children}</div>
 		</>
 	);
