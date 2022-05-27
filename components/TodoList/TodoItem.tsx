@@ -6,11 +6,28 @@ interface Props {
 }
 
 const TodoItem = ({ todo }: Props) => {
-	const { title, isDone } = todo;
+	let { title, isDone, tags } = todo;
 	return (
-		<div className={'box-border flex items-center p-4'}>
-			<div className={'text-xl'}>{title}</div>
-			{isDone && <div className={'p-4 text-blue-800'}>&#x2713;</div>}
+		<div className={'box-border border-t p-4'}>
+			<div className={'flex justify-between'}>
+				<input
+					type={'checkbox'}
+					className={'checkbox checkbox-primary checkbox-lg'}
+					checked={isDone}
+				/>
+				<div className={'flex w-11/12 items-center hover:text-primary'}>
+					<div className={'flex-grow-1 pl-8 text-center text-xl'}>{title}</div>
+					{/*{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}*/}
+				</div>
+				<button className={'btn btn-ghost btn-circle btn-sm'}>x</button>
+			</div>
+			<div className={'box-border pl-16'}>
+				{tags.map((tag) => (
+					<div key={tag.name} className={'badge'} style={{ backgroundColor: tag.color }}>
+						{tag.name}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };

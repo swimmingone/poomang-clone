@@ -2,7 +2,7 @@ export type Todo = {
 	id: string;
 	title: string;
 	description: string;
-	tag: Tag;
+	tags: Array<Tag>;
 	dueDate: string;
 	creationDate: string;
 	editDate: string;
@@ -12,6 +12,5 @@ export type Todo = {
 
 export type Tag = {
 	name: string;
-	textColor: string;
-	backgroundColor: string;
+	color: string;
 };
