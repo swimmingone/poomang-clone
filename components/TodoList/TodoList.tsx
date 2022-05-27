@@ -1,7 +1,6 @@
 import React from 'react';
 import TodoItem from './TodoItem';
-import { Tag, Todo } from '../../types/Todo';
-import CreateButton from '../CreateButton';
+import { Todo } from '../../types/Todo';
 
 interface Props {}
 
@@ -36,7 +35,6 @@ const TodoList = ({}: Props) => {
 		<div className={'m-16 w-3/4 flex-col bg-white'}>
 			<div className={'bg-blue-100 p-4 text-center text-2xl text-blue-600'}>Todo-list!</div>
 			{todoList}
-			<CreateButton />
 		</div>
 	);
 };
