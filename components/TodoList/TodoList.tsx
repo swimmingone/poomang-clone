@@ -9,9 +9,9 @@ const TodoList = ({}: Props) => {
 	let todos: Array<Todo> = [
 		{
 			id: '1',
-			title: 'made it a adsflkja;sdlfkjas;dofiaweofi',
+			title: 'made it a adsflkja;sdlfkjas; dofiaweofi',
 			description: 'string',
-			tags: [{ name: '뭐지', color: 'primary' }],
+			tags: [{ name: '뭐지', color: 'error' }],
 			dueDate: 'string',
 			creationDate: 'string',
 			editDate: 'string',
@@ -22,7 +22,7 @@ const TodoList = ({}: Props) => {
 			id: '2',
 			title: 'something',
 			description: 'string',
-			tags: [{ name: 'string', color: 'blue' }],
+			tags: [{ name: '뭘까', color: 'accent' }],
 			dueDate: 'string',
 			creationDate: 'string',
 			editDate: 'string',
