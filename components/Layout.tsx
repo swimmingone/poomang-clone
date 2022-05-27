@@ -12,7 +12,11 @@ const Layout = ({ children }: Props) => {
 				<title>TodoApp</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div className={'box-border flex w-screen flex-col justify-between bg-white p-16'}>
+			<div
+				className={
+					'box-border flex w-screen flex-col items-center justify-between bg-white p-16'
+				}
+			>
 				{children}
 			</div>
 		</>

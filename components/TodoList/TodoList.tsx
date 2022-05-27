@@ -31,7 +31,7 @@ const TodoList = ({}: Props) => {
 	];
 
 	const todoList = todos?.map((todo) => <TodoItem key={todo.title} todo={todo} />);
-	return <div>{todoList}</div>;
+	return <div className={'w-full'}>{todoList}</div>;
 };
 
 export default TodoList;

@@ -5,7 +5,11 @@ interface Prop {
 }
 
 const PageTitle = ({ title }: Prop) => {
-	return <div className={'bg-blue-100 p-4 text-center text-2xl text-blue-600'}>{title}</div>;
+	return (
+		<div className={'w-full bg-primary-content p-4 text-center text-2xl text-primary'}>
+			{title}
+		</div>
+	);
 };
 
 export default PageTitle;
