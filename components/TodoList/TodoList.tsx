@@ -31,12 +31,7 @@ const TodoList = ({}: Props) => {
 	];
 
 	const todoList = todos?.map((todo) => <TodoItem key={todo.title} todo={todo} />);
-	return (
-		<div className={'m-16 w-3/4 flex-col bg-white'}>
-			<div className={'bg-blue-100 p-4 text-center text-2xl text-blue-600'}>Todo-list!</div>
-			{todoList}
-		</div>
-	);
+	return <div>{todoList}</div>;
 };
 
 export default TodoList;

@@ -1,6 +1,6 @@
 import React, { ReactChild, ReactChildren } from 'react';
 
-import Head from "next/head";
+import Head from 'next/head';
 
 interface Props {
 	children: ReactChild | ReactChildren;
@@ -8,11 +8,13 @@ interface Props {
 const Layout = ({ children }: Props) => {
 	return (
 		<>
-            <Head>
-                <title>너만의 우주, 푸망</title>
-                <link rel="icon" href="/favicon.jpg" />
-            </Head>
-			<div className={'flex justify-center'}>{children}</div>
+			<Head>
+				<title>TodoApp</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+			<div className={'box-border flex w-screen flex-col justify-between bg-white p-16'}>
+				{children}
+			</div>
 		</>
 	);
 };
