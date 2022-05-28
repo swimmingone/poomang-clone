@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
 import useSelectedTodoState from '../../store/useSelectedTodoState';
+import EditForm from '../../components/EditForm';
 
 const EditTodo = () => {
 	const router = useRouter();
@@ -19,7 +20,7 @@ const EditTodo = () => {
 	return (
 		<>
 			<PageTitle title={'Todo Detail'} />
-			<h1>{selectedTodo.title}</h1>
+			<EditForm selectedTodo={selectedTodo} />
 		</>
 	);
 };
