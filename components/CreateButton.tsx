@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 const CreateButton = () => {
 	const router = useRouter();
 	return (
-		<div className={'flex justify-center'}>
+		<div className={'box-border flex justify-center pt-4'}>
 			<button
 				className="btn btn-primary btn-circle text-2xl"
 				type="button"
