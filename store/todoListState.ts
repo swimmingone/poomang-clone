@@ -1,35 +1,13 @@
 import { atom, selector } from 'recoil';
 import { Todo } from '../types/Todo';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 export const todoListState = atom<Array<Todo>>({
 	key: 'todoListState',
-	default: [
-		{
-			id: '1',
-			title: 'made it a adsflkja;sdlfkjas; dofiaweofi',
-			description: 'string',
-			tags: [
-				{ name: '뭐지', color: 'primary' },
-				{ name: '뭘까', color: 'accent' },
-			],
-			dueDate: 'string',
-			creationDate: 'string',
-			editDate: 'string',
-			doneDate: 'string',
-			isDone: false,
-		},
-		{
-			id: '2',
-			title: 'something',
-			description: 'string',
-			tags: [{ name: '뭘까', color: 'accent' }],
-			dueDate: 'string',
-			creationDate: 'string',
-			editDate: 'string',
-			doneDate: 'string',
-			isDone: true,
-		},
-	],
+	default: [],
+	effects_UNSTABLE: [persistAtom],
 });
 
 export const selectedIdState = atom<string>({
