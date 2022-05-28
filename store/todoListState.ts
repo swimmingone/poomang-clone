@@ -1,6 +1,7 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
+import { Todo } from '../types/Todo';
 
-export const todoListState = atom({
+export const todoListState = atom<Array<Todo>>({
 	key: 'todoListState',
 	default: [
 		{
@@ -8,7 +9,7 @@ export const todoListState = atom({
 			title: 'made it a adsflkja;sdlfkjas; dofiaweofi',
 			description: 'string',
 			tags: [
-				{ name: '뭐지', color: 'error' },
+				{ name: '뭐지', color: 'primary' },
 				{ name: '뭘까', color: 'accent' },
 			],
 			dueDate: 'string',
@@ -29,4 +30,18 @@ export const todoListState = atom({
 			isDone: true,
 		},
 	],
+});
+
+export const selectedIdState = atom<string>({
+	key: 'selectedIdState',
+	default: '',
+});
+
+export const selectedTodoState = selector({
+	key: 'selectedTodoState',
+	get: ({ get }) => {
+		const todoList = get(todoListState);
+		const selectedId = get(selectedIdState);
+		return todoList.find((todo) => todo.id === selectedId);
+	},
 });

@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import FormItem from './FormItem';
 import SubmitButton from '../SubmitButton';
 import useInputs from '../../hooks/useInputs';
-import useTodoState from '../../store/useTodoState';
+import useTodoListState from '../../store/useTodoListState';
 
 const CreateForm = () => {
 	const router = useRouter();
-	const { addTodo } = useTodoState();
+	const { addTodo } = useTodoListState();
 
 	const [data, onChangeData] = useInputs({
 		id: '',

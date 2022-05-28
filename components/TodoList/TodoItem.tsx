@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import useTodoState from '../../store/useTodoState';
 import DeleteModal from '../DeleteModal';
 import { Tag } from '../../types/Todo';
+import useSelectedTodoState from '../../store/useSelectedTodoState';
 
 interface Props {
 	id: string;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const TodoItem = ({ id, title, tags, isDone }: Props) => {
-	const { onToggleDone } = useTodoState();
+	const { onToggleDone } = useSelectedTodoState();
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
@@ -25,7 +25,7 @@ const TodoItem = ({ id, title, tags, isDone }: Props) => {
 					type={'checkbox'}
 					className={'checkbox checkbox-primary checkbox-lg'}
 					checked={isDone}
-					onChange={onToggleDone}
+					onChange={() => onToggleDone}
 				/>
 				<div className={'flex w-11/12 cursor-pointer hover:text-primary'}>
 					<div className={'flex-grow-1 pl-8 text-xl'}>{title}</div>

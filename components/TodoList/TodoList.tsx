@@ -1,9 +1,9 @@
 import React from 'react';
 import TodoItem from './TodoItem';
-import useTodoState from '../../store/useTodoState';
+import useTodoListState from '../../store/useTodoListState';
 
 const TodoList = () => {
-	const { todos } = useTodoState();
+	const { todos } = useTodoListState();
 
 	const todoList = todos?.map((todo) => (
 		<TodoItem

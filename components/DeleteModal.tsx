@@ -1,5 +1,5 @@
 import React from 'react';
-import useTodoState from '../store/useTodoState';
+import useTodoListState from '../store/useTodoListState';
 
 interface Props {
 	id: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const DeleteModal = ({ id, isModalVisible, setIsModalVisible }: Props) => {
-	const { deleteTodo } = useTodoState();
+	const { deleteTodo } = useTodoListState();
 
 	return (
 		<>
