@@ -4,6 +4,7 @@ import FormItem from './CreateForm/FormItem';
 import useTodoListState from '../store/useTodoListState';
 import SubmitButton from './SubmitButton';
 import { Todo } from '../types/Todo';
+import dayjs from 'dayjs';
 
 interface Prop {
 	selectedTodo: Todo;
@@ -16,7 +17,7 @@ const EditForm = ({ selectedTodo }: Prop) => {
 	const [data, setData] = useState(selectedTodo);
 
 	const onClickSubmit = () => {
-		editTodo(data);
+		editTodo({ ...data, editDate: dayjs().format('YYYY/MM/DD hh:mm') });
 		router.push('/');
 	};
 
@@ -53,6 +54,12 @@ const EditForm = ({ selectedTodo }: Prop) => {
 					value={data.dueDate}
 					onChange={(e) => setData({ ...data, dueDate: e.target.value })}
 				/>
+			</FormItem>
+			<FormItem label={'생성일'}>
+				<h1>{data.creationDate}</h1>
+			</FormItem>
+			<FormItem label={'수정일'}>
+				<h1>{data.editDate}</h1>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} />
 		</div>

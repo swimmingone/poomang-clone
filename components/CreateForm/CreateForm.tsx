@@ -4,6 +4,7 @@ import FormItem from './FormItem';
 import SubmitButton from '../SubmitButton';
 import useInputs from '../../hooks/useInputs';
 import useTodoListState from '../../store/useTodoListState';
+import dayjs from 'dayjs';
 
 const CreateForm = () => {
 	const router = useRouter();
@@ -15,7 +16,7 @@ const CreateForm = () => {
 		description: '',
 		tags: [],
 		dueDate: '',
-		creationDate: '',
+		creationDate: dayjs().format('YYYY/MM/DD hh:mm'),
 		editDate: '',
 		doneDate: '',
 		isDone: false,
@@ -27,13 +28,14 @@ const CreateForm = () => {
 	};
 
 	return (
-		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
+		<form className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
 				<input
 					name={'title'}
 					type={'text'}
 					className="input input-bordered input-sm"
 					onChange={onChangeData}
+					required
 				/>
 			</FormItem>
 			<FormItem label={'상세설명'}>
@@ -53,7 +55,7 @@ const CreateForm = () => {
 				/>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} />
-		</div>
+		</form>
 	);
 };
 
