@@ -1,12 +1,23 @@
-import React from 'react';
-import { Todo } from '../../types/Todo';
+import React, { useState } from 'react';
+import useTodoState from '../../store/useTodoState';
+import DeleteModal from '../DeleteModal';
+import { Tag } from '../../types/Todo';
 
 interface Props {
-	todo: Todo;
+	id: string;
+	title: string;
+	tags: Tag[];
+	isDone: boolean;
 }
 
-const TodoItem = ({ todo }: Props) => {
-	let { title, isDone, tags } = todo;
+const TodoItem = ({ id, title, tags, isDone }: Props) => {
+	const { onToggleDone } = useTodoState();
+
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const onClickDelete = () => {
+		setIsModalVisible(!isModalVisible);
+	};
+
 	return (
 		<div className={'box-border border-t p-4'}>
 			<div className={'flex'}>
@@ -14,12 +25,15 @@ const TodoItem = ({ todo }: Props) => {
 					type={'checkbox'}
 					className={'checkbox checkbox-primary checkbox-lg'}
 					checked={isDone}
+					onChange={onToggleDone}
 				/>
 				<div className={'flex w-11/12 cursor-pointer hover:text-primary'}>
 					<div className={'flex-grow-1 pl-8 text-xl'}>{title}</div>
 					{/*{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}*/}
 				</div>
-				<button className={'btn btn-ghost btn-circle btn-sm'}>x</button>
+				<button className={'btn btn-ghost btn-circle btn-sm'} onClick={onClickDelete}>
+					x
+				</button>
 			</div>
 			<div className={'box-border px-16'}>
 				{tags.map((tag) => (
@@ -28,6 +42,13 @@ const TodoItem = ({ todo }: Props) => {
 					</div>
 				))}
 			</div>
+			{isModalVisible && (
+				<DeleteModal
+					id={id}
+					isModalVisible={isModalVisible}
+					setIsModalVisible={setIsModalVisible}
+				/>
+			)}
 		</div>
 	);
 };

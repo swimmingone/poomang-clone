@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { todoListState } from './TodoListState';
+import { todoListState } from './todoListState';
 import { useCallback } from 'react';
 import { Todo } from '../types/Todo';
 
@@ -41,10 +41,16 @@ const useTodoState = () => {
 		]);
 	};
 
+	const deleteTodo = (id: string) => {
+		console.log(id);
+		setTodos((oldList) => oldList.filter((todo) => todo.id != id));
+	};
+
 	return {
 		todos,
 		setTodos,
 		addTodo,
+		deleteTodo,
 		onToggleDone,
 		getTodoById,
 	};
