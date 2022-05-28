@@ -11,12 +11,12 @@ interface Prop {
 
 const EditForm = ({ selectedTodo }: Prop) => {
 	const router = useRouter();
-	const { addTodo } = useTodoListState();
+	const { editTodo } = useTodoListState();
 
 	const [data, setData] = useState(selectedTodo);
 
 	const onClickSubmit = () => {
-		addTodo(data);
+		editTodo(data);
 		router.push('/');
 	};
 

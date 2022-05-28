@@ -5,12 +5,9 @@ import { Todo } from '../types/Todo';
 const useTodoListState = () => {
 	const [todos, setTodos] = useRecoilState(todoListState);
 
-	const newID = function () {
-		return Math.random().toString(36).substring(2, 16);
-	};
 	const addTodo = (data: Todo) => {
-		setTodos((oldList) => [
-			...oldList,
+		const newList = [
+			...todos,
 			{
 				id: newID(),
 				title: data.title,
@@ -22,20 +19,41 @@ const useTodoListState = () => {
 				doneDate: 'string',
 				isDone: false,
 			},
-		]);
+		];
+		setTodos(newList);
+	};
+
+	const editTodo = (data: Todo) => {
+		const index = todos.findIndex((todo) => todo.id === data.id);
+		const newList = replaceItemAtIndex(todos, index, data);
+		setTodos(newList);
 	};
 
 	const deleteTodo = (id: string) => {
-		console.log(id);
-		setTodos((oldList) => oldList.filter((todo) => todo.id != id));
+		const index = todos.findIndex((todo) => todo.id === id);
+		const newList = removeItemAtIndex(todos, index);
+		setTodos(newList);
 	};
 
 	return {
 		todos,
 		setTodos,
 		addTodo,
+		editTodo,
 		deleteTodo,
 	};
 };
+
+function newID() {
+	return Math.random().toString(36).substring(2, 16);
+}
+
+function replaceItemAtIndex(arr: Todo[], index: number, newValue: Todo) {
+	return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
+
+function removeItemAtIndex(arr: Todo[], index: number) {
+	return [...arr.slice(0, index), ...arr.slice(index + 1)];
+}
 
 export default useTodoListState;
