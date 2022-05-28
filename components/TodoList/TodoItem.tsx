@@ -62,6 +62,7 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 			{isModalVisible && (
 				<DeleteModal
 					id={id}
+					isItemModal
 					isModalVisible={isModalVisible}
 					setIsModalVisible={setIsModalVisible}
 				/>

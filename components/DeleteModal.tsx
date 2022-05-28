@@ -3,12 +3,13 @@ import useTodoListState from '../store/useTodoListState';
 
 interface Props {
 	id: string;
+	isItemModal: boolean;
 	isModalVisible: boolean;
 	setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DeleteModal = ({ id, isModalVisible, setIsModalVisible }: Props) => {
-	const { deleteTodo } = useTodoListState();
+const DeleteModal = ({ id, isItemModal, isModalVisible, setIsModalVisible }: Props) => {
+	const { deleteTodo, deleteAllDone } = useTodoListState();
 
 	return (
 		<>
@@ -26,15 +27,37 @@ const DeleteModal = ({ id, isModalVisible, setIsModalVisible }: Props) => {
 					>
 						✕
 					</button>
-					<h3 className="text-lg font-bold">정말 삭제하시겠어요?</h3>
-					<div className="modal-action">
-						<button
-							className="btn btn-error btn-outline"
-							onClick={() => deleteTodo(id)}
-						>
-							yes
-						</button>
-					</div>
+					{isItemModal ? (
+						<>
+							<h3 className="text-lg font-bold">정말 삭제하시겠어요?</h3>
+							<div className="modal-action">
+								<button
+									className="btn btn-error btn-outline"
+									onClick={() => {
+										deleteTodo(id);
+										setIsModalVisible(false);
+									}}
+								>
+									yes
+								</button>
+							</div>
+						</>
+					) : (
+						<>
+							<h3 className="text-lg font-bold">완료된 할 일을 일괄 삭제합니다.</h3>
+							<div className="modal-action">
+								<button
+									className="btn btn-error btn-outline"
+									onClick={() => {
+										deleteAllDone();
+										setIsModalVisible(false);
+									}}
+								>
+									yes
+								</button>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</>

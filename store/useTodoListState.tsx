@@ -47,6 +47,11 @@ const useTodoListState = () => {
 		setTodos(newList);
 	};
 
+	const deleteAllDone = () => {
+		const newList = todos.filter((todo) => !todo.isDone);
+		setTodos(newList);
+	};
+
 	return {
 		todos,
 		toggleDone,
@@ -54,6 +59,7 @@ const useTodoListState = () => {
 		addTodo,
 		editTodo,
 		deleteTodo,
+		deleteAllDone,
 	};
 };
 
