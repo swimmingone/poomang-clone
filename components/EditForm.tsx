@@ -61,7 +61,7 @@ const EditForm = ({ selectedTodo }: Prop) => {
 			<FormItem label={'수정일'}>
 				<h1>{data.editDate}</h1>
 			</FormItem>
-			<SubmitButton onSubmit={onClickSubmit} />
+			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
 		</div>
 	);
 };

@@ -30,13 +30,17 @@ const CreateForm = () => {
 	return (
 		<form className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
-				<input
-					name={'title'}
-					type={'text'}
-					className="input input-bordered input-sm"
-					onChange={onChangeData}
-					required
-				/>
+				<>
+					<input
+						name={'title'}
+						type={'text'}
+						className="input input-bordered input-sm"
+						onChange={onChangeData}
+					/>
+					{!data.title && (
+						<p className={'text-sm text-red-600'}>*필수 입력 항목입니다.</p>
+					)}
+				</>
 			</FormItem>
 			<FormItem label={'상세설명'}>
 				<textarea
@@ -54,7 +58,7 @@ const CreateForm = () => {
 					onChange={onChangeData}
 				/>
 			</FormItem>
-			<SubmitButton onSubmit={onClickSubmit} />
+			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
 		</form>
 	);
 };
