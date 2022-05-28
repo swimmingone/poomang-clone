@@ -11,6 +11,7 @@ const TodoList = () => {
 			id={todo.id}
 			title={todo.title}
 			isDone={todo.isDone}
+			dueDate={todo.dueDate}
 			tags={todo.tags}
 		/>
 	));

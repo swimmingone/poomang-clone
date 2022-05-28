@@ -3,17 +3,21 @@ import DeleteModal from '../DeleteModal';
 import { Tag } from '../../types/Todo';
 import { useRouter } from 'next/router';
 import useTodoListState from '../../store/useTodoListState';
+import dayjs from 'dayjs';
 
 interface Props {
 	id: string;
 	title: string;
 	tags: Tag[];
 	isDone: boolean;
+	dueDate: string;
 }
 
-const TodoItem = ({ id, title, tags, isDone }: Props) => {
+const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 	const router = useRouter();
 	const { toggleDone } = useTodoListState();
+	const now = dayjs().format('YYYY/MM/DD hh:mm');
+	const isUrgent = dayjs(dueDate, 'YYYY/MM/DD hh:mm').diff(now, 'm') <= 3 * 24 * 60;
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
@@ -42,7 +46,7 @@ const TodoItem = ({ id, title, tags, isDone }: Props) => {
 					>
 						{title}
 					</div>
-					{/*{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}*/}
+					{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}
 				</div>
 				<button className={'btn btn-ghost btn-circle btn-sm'} onClick={onClickDelete}>
 					x
