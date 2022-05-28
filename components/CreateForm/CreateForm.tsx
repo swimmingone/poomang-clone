@@ -3,40 +3,26 @@ import { useRouter } from 'next/router';
 import FormItem from './FormItem';
 import SubmitButton from '../SubmitButton';
 import useInputs from '../../hooks/useInputs';
-import { useSetRecoilState } from 'recoil';
-import { todoListState } from '../../store/TodoListState';
+import useTodoState from '../../store/useTodoState';
 
 const CreateForm = () => {
 	const router = useRouter();
-	const setTodoList = useSetRecoilState(todoListState);
+	const { addTodo } = useTodoState();
 
 	const [data, onChangeData] = useInputs({
+		id: '',
 		title: '',
 		description: '',
+		tags: [],
+		dueDate: '',
+		creationDate: '',
+		editDate: '',
+		doneDate: '',
+		isDone: false,
 	});
 
-	const newID = function () {
-		return Math.random().toString(36).substring(2, 16);
-	};
-	const addTodo = () => {
-		setTodoList((oldList) => [
-			...oldList,
-			{
-				id: newID(),
-				title: data.title,
-				description: data.description,
-				tags: [],
-				dueDate: 'string',
-				creationDate: 'string',
-				editDate: 'string',
-				doneDate: 'string',
-				isDone: false,
-			},
-		]);
-	};
-
 	const onClickSubmit = () => {
-		addTodo();
+		addTodo(data);
 		router.push('/');
 	};
 
@@ -59,7 +45,12 @@ const CreateForm = () => {
 				/>
 			</FormItem>
 			<FormItem label={'마감목표일'}>
-				<input type={'date'} className="input input-bordered input-sm w-full" />
+				<input
+					name={'dueDate'}
+					type={'date'}
+					className="input input-bordered input-sm w-full"
+					onChange={onChangeData}
+				/>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} />
 		</div>
