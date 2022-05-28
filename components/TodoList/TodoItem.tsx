@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import DeleteModal from '../DeleteModal';
 import { Tag } from '../../types/Todo';
-import useSelectedTodoState from '../../store/useSelectedTodoState';
 import { useRouter } from 'next/router';
+import useTodoListState from '../../store/useTodoListState';
 
 interface Props {
 	id: string;
@@ -13,7 +13,7 @@ interface Props {
 
 const TodoItem = ({ id, title, tags, isDone }: Props) => {
 	const router = useRouter();
-	const { onToggleDone } = useSelectedTodoState();
+	const { toggleDone } = useTodoListState();
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
@@ -27,13 +27,21 @@ const TodoItem = ({ id, title, tags, isDone }: Props) => {
 					type={'checkbox'}
 					className={'checkbox checkbox-primary checkbox-lg'}
 					checked={isDone}
-					onChange={() => onToggleDone}
+					onChange={() => toggleDone(id)}
 				/>
 				<div
 					className={'flex w-11/12 cursor-pointer hover:text-primary'}
 					onClick={() => router.push(`/edit/${id}`)}
 				>
-					<div className={'flex-grow-1 pl-8 text-xl'}>{title}</div>
+					<div
+						className={`${
+							isDone
+								? 'flex-grow-1 pl-8 text-xl text-base-300 line-through'
+								: 'flex-grow-1 pl-8 text-xl'
+						}`}
+					>
+						{title}
+					</div>
 					{/*{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}*/}
 				</div>
 				<button className={'btn btn-ghost btn-circle btn-sm'} onClick={onClickDelete}>

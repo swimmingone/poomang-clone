@@ -5,6 +5,18 @@ import { Todo } from '../types/Todo';
 const useTodoListState = () => {
 	const [todos, setTodos] = useRecoilState(todoListState);
 
+	const toggleDone = (id: string) => {
+		const index = todos.findIndex((todo) => todo.id === id);
+		const item = todos.find((todo) => todo.id == id);
+		if (!item) return;
+		const newList = replaceItemAtIndex(todos, index, {
+			...item,
+			isDone: !item.isDone,
+		});
+
+		setTodos(newList);
+	};
+
 	const addTodo = (data: Todo) => {
 		const newList = [
 			...todos,
@@ -14,9 +26,9 @@ const useTodoListState = () => {
 				description: data.description,
 				tags: [],
 				dueDate: data.dueDate,
-				creationDate: 'string',
-				editDate: 'string',
-				doneDate: 'string',
+				creationDate: data.creationDate,
+				editDate: '',
+				doneDate: '',
 				isDone: false,
 			},
 		];
@@ -37,6 +49,7 @@ const useTodoListState = () => {
 
 	return {
 		todos,
+		toggleDone,
 		setTodos,
 		addTodo,
 		editTodo,
