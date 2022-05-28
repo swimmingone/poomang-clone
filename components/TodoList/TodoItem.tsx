@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DeleteModal from '../DeleteModal';
 import { Tag } from '../../types/Todo';
 import useSelectedTodoState from '../../store/useSelectedTodoState';
+import { useRouter } from 'next/router';
 
 interface Props {
 	id: string;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TodoItem = ({ id, title, tags, isDone }: Props) => {
+	const router = useRouter();
 	const { onToggleDone } = useSelectedTodoState();
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +29,10 @@ const TodoItem = ({ id, title, tags, isDone }: Props) => {
 					checked={isDone}
 					onChange={() => onToggleDone}
 				/>
-				<div className={'flex w-11/12 cursor-pointer hover:text-primary'}>
+				<div
+					className={'flex w-11/12 cursor-pointer hover:text-primary'}
+					onClick={() => router.push(`/edit/${id}`)}
+				>
 					<div className={'flex-grow-1 pl-8 text-xl'}>{title}</div>
 					{/*{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}*/}
 				</div>
