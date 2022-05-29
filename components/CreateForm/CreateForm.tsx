@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import FormItem from './FormItem';
 import SubmitButton from '../SubmitButton';
 import useInputs from '../../hooks/useInputs';
 import useTodoListState from '../../store/useTodoListState';
 import dayjs from 'dayjs';
+import useUnloadAlert from '../../hooks/useUnloadAlert';
 
 const CreateForm = () => {
 	const router = useRouter();
 	const { addTodo } = useTodoListState();
+	const { enablePrevent, disablePrevent } = useUnloadAlert();
 
 	const [data, onChangeData] = useInputs({
 		id: '',
@@ -27,8 +29,15 @@ const CreateForm = () => {
 		router.push('/');
 	};
 
+	useEffect(() => {
+		enablePrevent();
+		return () => {
+			disablePrevent();
+		};
+	}, [enablePrevent, disablePrevent]);
+
 	return (
-		<form className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
+		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
 				<>
 					<input
@@ -59,7 +68,7 @@ const CreateForm = () => {
 				/>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
-		</form>
+		</div>
 	);
 };
 

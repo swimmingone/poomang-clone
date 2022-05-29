@@ -5,6 +5,7 @@ import useTodoListState from '../store/useTodoListState';
 import SubmitButton from './SubmitButton';
 import { Todo } from '../types/Todo';
 import dayjs from 'dayjs';
+import useUnloadAlert from '../hooks/useUnloadAlert';
 
 interface Prop {
 	selectedTodo: Todo;
@@ -13,6 +14,7 @@ interface Prop {
 const EditForm = ({ selectedTodo }: Prop) => {
 	const router = useRouter();
 	const { editTodo } = useTodoListState();
+	const { enablePrevent, disablePrevent } = useUnloadAlert();
 
 	const [data, setData] = useState(selectedTodo);
 
@@ -22,6 +24,13 @@ const EditForm = ({ selectedTodo }: Prop) => {
 	};
 
 	useEffect(() => {
+		enablePrevent();
+		return () => {
+			disablePrevent();
+		};
+	}, [enablePrevent, disablePrevent]);
+
+	useEffect(() => {
 		if (!selectedTodo) return;
 		setData(selectedTodo);
 	}, [selectedTodo]);
@@ -29,13 +38,18 @@ const EditForm = ({ selectedTodo }: Prop) => {
 	return (
 		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
-				<input
-					name={'title'}
-					type={'text'}
-					className="input input-bordered input-sm"
-					value={data.title}
-					onChange={(e) => setData({ ...data, title: e.target.value })}
-				/>
+				<>
+					<input
+						name={'title'}
+						type={'text'}
+						className="input input-bordered input-sm"
+						value={data.title}
+						onChange={(e) => setData({ ...data, title: e.target.value })}
+					/>
+					{!data.title && (
+						<p className={'text-sm text-red-600'}>*필수 입력 항목입니다.</p>
+					)}
+				</>
 			</FormItem>
 			<FormItem label={'상세설명'}>
 				<textarea
