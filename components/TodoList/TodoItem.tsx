@@ -25,7 +25,11 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 	};
 
 	return (
-		<div className={'box-border border-t p-4'}>
+		<div
+			className={`${
+				isUrgent ? 'order-first box-border border-t p-4' : 'box-border border-t p-4'
+			}`}
+		>
 			<div className={'flex'}>
 				<input
 					type={'checkbox'}
@@ -46,7 +50,7 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 					>
 						{title}
 					</div>
-					{isUrgent && <div className={'badge badge-sm badge-warning'}>!</div>}
+					{isUrgent && <div className={'badge badge-xs badge-warning m-1'}>!</div>}
 				</div>
 				<button className={'btn btn-ghost btn-circle btn-sm'} onClick={onClickDelete}>
 					x

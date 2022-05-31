@@ -35,7 +35,7 @@ const TodoList = () => {
 				isModalVisible={isModalVisible}
 				setIsModalVisible={setIsModalVisible}
 			/>
-			<div className={'w-full'}>{todoList}</div>
+			<div className={'flex w-full flex-col'}>{todoList}</div>
 		</>
 	);
 };
