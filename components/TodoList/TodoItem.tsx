@@ -34,7 +34,7 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 					onChange={() => toggleDone(id)}
 				/>
 				<div
-					className={'flex w-11/12 cursor-pointer hover:text-primary'}
+					className={'flex w-11/12 cursor-pointer hover:text-primary-focus'}
 					onClick={() => router.push(`/edit/${id}`)}
 				>
 					<div
@@ -52,6 +52,7 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 					x
 				</button>
 			</div>
+			<div className={'box-border px-16 leading-none text-base-300'}>{dueDate}</div>
 			<div className={'box-border px-16'}>
 				{tags.map((tag) => (
 					<div key={tag.name} className={`badge badge-${tag.color} mr-1`}>
