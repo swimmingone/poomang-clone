@@ -23,3 +23,25 @@ export const selectedTodoState = selector({
 		return todoList.find((todo) => todo.id === selectedId);
 	},
 });
+
+export const todoListFilterState = atom<'Show All' | 'Show Done' | 'Show Undone'>({
+	key: 'todoListFilterState',
+	default: 'Show All',
+});
+
+export const filteredTodoListState = selector({
+	key: 'filteredTodoListState',
+	get: ({ get }) => {
+		const filter = get(todoListFilterState);
+		const list = get(todoListState);
+
+		switch (filter) {
+			case 'Show Done':
+				return list.filter((item) => item.isDone);
+			case 'Show Undone':
+				return list.filter((item) => !item.isDone);
+			default:
+				return list;
+		}
+	},
+});
