@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedIdState, selectedTodoState } from './todoListState';
 import { useCallback } from 'react';
 
-const useTodoState = () => {
+const useSelectedTodoState = () => {
 	const selectedTodo = useRecoilValue(selectedTodoState);
 	const [selectedId, setSelectedId] = useRecoilState(selectedIdState);
 
@@ -21,4 +21,4 @@ const useTodoState = () => {
 	};
 };
 
-export default useTodoState;
+export default useSelectedTodoState;
