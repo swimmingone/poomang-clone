@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DeleteModal from '../DeleteModal';
-import { Tag } from '../../types/Todo';
+import { Tag } from '../../types/Tag';
 import { useRouter } from 'next/router';
 import useTodoListState from '../../store/useTodoListState';
 import dayjs from 'dayjs';
