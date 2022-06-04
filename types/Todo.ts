@@ -1,3 +1,5 @@
+import { Tag } from './Tag';
+
 export type Todo = {
 	id: string;
 	title: string;
@@ -8,9 +10,4 @@ export type Todo = {
 	editDate: string;
 	doneDate: string;
 	isDone: boolean;
-};
-
-export type Tag = {
-	name: string;
-	color: string;
 };
