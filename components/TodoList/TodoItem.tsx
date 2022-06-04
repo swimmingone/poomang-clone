@@ -4,6 +4,7 @@ import { Tag } from '../../types/Tag';
 import { useRouter } from 'next/router';
 import useTodoListState from '../../store/useTodoListState';
 import dayjs from 'dayjs';
+import TagList from '../TagList';
 
 interface Props {
 	id: string;
@@ -57,13 +58,7 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 				</button>
 			</div>
 			<div className={'box-border px-16 leading-none text-base-300'}>{dueDate}</div>
-			<div className={'box-border px-16'}>
-				{tags.map((tag) => (
-					<div key={tag.name} className={`badge badge-${tag.color} mr-1`}>
-						{tag.name}
-					</div>
-				))}
-			</div>
+			<TagList tags={tags} />
 			{isModalVisible && (
 				<DeleteModal
 					id={id}
