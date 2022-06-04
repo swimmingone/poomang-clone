@@ -24,7 +24,7 @@ export const selectedTodoState = selector({
 	},
 });
 
-export const todoListFilterState = atom<'Show All' | 'Show Done' | 'Show Undone'>({
+export const todoListFilterState = atom<string>({
 	key: 'todoListFilterState',
 	default: 'Show All',
 });

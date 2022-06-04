@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import TodoItem from './TodoItem';
-import useTodoListState from '../../store/useTodoListState';
 import DeleteModal from '../DeleteModal';
+import TodoListFilters from '../TodoListFilters';
+import useTodoListFilterState from '../../store/useTodoListFilterState';
 
 const TodoList = () => {
-	const { todos } = useTodoListState();
+	const { filteredTodos } = useTodoListFilterState();
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
 		setIsModalVisible(!isModalVisible);
 	};
 
-	const todoList = todos?.map((todo) => (
+	const todoList = filteredTodos?.map((todo) => (
 		<TodoItem
 			key={todo.id}
 			id={todo.id}
@@ -24,8 +25,9 @@ const TodoList = () => {
 
 	return (
 		<>
-			<div className={'box-border flex w-full justify-end py-2'}>
-				<button className={'btn btn-error btn-outline btn-xs'} onClick={onClickDelete}>
+			<div className={'box-border flex w-full justify-between py-2'}>
+				<TodoListFilters />
+				<button className={'btn btn-outline btn-error btn-xs'} onClick={onClickDelete}>
 					delete completed
 				</button>
 			</div>
