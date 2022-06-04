@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import PageTitle from '../../components/PageTitle';
-import useSelectedTodoState from '../../store/useSelectedTodoState';
-import EditForm from '../../components/EditForm';
+import PageTitle from '../../src/common/components/PageTitle';
+import useSelectedTodoState from '../../src/todo/store/useSelectedTodoState';
+import EditForm from '../../src/todo/components/templates/EditForm';
 
 const EditTodo = () => {
 	const router = useRouter();

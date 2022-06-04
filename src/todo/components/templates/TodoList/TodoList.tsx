@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import TodoItem from './TodoItem';
-import DeleteModal from '../DeleteModal';
-import TodoListFilters from '../TodoListFilters';
-import useTodoListFilterState from '../../store/useTodoListFilterState';
+import DeleteModal from '../../organisms/DeleteModal';
+import TodoListFilters from '../../organisms/TodoListFilters';
+import useTodoListFilterState from '../../../store/useTodoListFilterState';
 
 const TodoList = () => {
 	const { filteredTodos } = useTodoListFilterState();

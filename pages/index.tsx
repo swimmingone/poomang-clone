@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import TodoList from '../components/TodoList/TodoList';
-import CreateButton from '../components/CreateButton';
+import TodoList from '../src/todo/components/templates/TodoList/TodoList';
+import CreateButton from '../src/todo/components/molecules/CreateButton';
 import React from 'react';
-import PageTitle from '../components/PageTitle';
+import PageTitle from '../src/common/components/PageTitle';
 
 const Home: NextPage = () => {
 	return (

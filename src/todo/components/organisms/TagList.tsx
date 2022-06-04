@@ -1,5 +1,5 @@
-import { Tag } from '../types/Tag';
 import React from 'react';
+import { Tag } from '../../types/Tag';
 
 interface Props {
 	tags: Tag[];

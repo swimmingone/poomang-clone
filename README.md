@@ -16,3 +16,6 @@ yarn
 yarn husky install
 yarn dev
 ```
+
+- EsLint, Prettier 설정 (tailwind prettier 플러그인 사용)
+- husky, lint-staged 로 pre-commit lint checking hook 설정

@@ -1,5 +1,5 @@
 import React from 'react';
-import useTodoListState from '../store/useTodoListState';
+import useTodoListState from '../../store/useTodoListState';
 
 interface Props {
 	id: string;
@@ -32,7 +32,7 @@ const DeleteModal = ({ id, isItemModal, isModalVisible, setIsModalVisible }: Pro
 							<h3 className="text-lg font-bold">정말 삭제하시겠어요?</h3>
 							<div className="modal-action">
 								<button
-									className="btn btn-error btn-outline"
+									className="btn btn-outline btn-error"
 									onClick={() => {
 										deleteTodo(id);
 										setIsModalVisible(false);
@@ -47,7 +47,7 @@ const DeleteModal = ({ id, isItemModal, isModalVisible, setIsModalVisible }: Pro
 							<h3 className="text-lg font-bold">완료된 할 일을 일괄 삭제합니다.</h3>
 							<div className="modal-action">
 								<button
-									className="btn btn-error btn-outline"
+									className="btn btn-outline btn-error"
 									onClick={() => {
 										deleteAllDone();
 										setIsModalVisible(false);

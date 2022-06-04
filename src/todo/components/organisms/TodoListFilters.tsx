@@ -1,4 +1,4 @@
-import useTodoListFilterState from '../store/useTodoListFilterState';
+import useTodoListFilterState from '../../store/useTodoListFilterState';
 
 const TodoListFilters = () => {
 	const { setFilter } = useTodoListFilterState();
@@ -8,7 +8,7 @@ const TodoListFilters = () => {
 	};
 
 	return (
-		<div className={'dropdown-hover dropdown dropdown-end dropdown-right'}>
+		<div className={'dropdown-hover dropdown-end dropdown-right dropdown'}>
 			<label tabIndex={0} className="btn btn-ghost btn-xs">
 				Filter
 			</label>

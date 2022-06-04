@@ -1,6 +1,6 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
-import CreateForm from '../components/CreateForm/CreateForm';
+import PageTitle from '../src/common/components/PageTitle';
+import CreateForm from '../src/todo/components/templates/CreateForm';
 
 const CreateTodo = () => {
 	return (
