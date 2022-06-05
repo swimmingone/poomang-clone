@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tag } from '../../types/Tag';
+import TagBadge from '../molecules/TagBadge';
 
 interface Props {
 	tags: Tag[];
@@ -7,11 +8,9 @@ interface Props {
 
 const TagList = ({ tags }: Props) => {
 	return (
-		<div className={'box-border px-16'}>
+		<div className={'flex flex-wrap gap-1'}>
 			{tags.map((tag) => (
-				<div key={tag.name} className={`badge badge-${tag.color} mr-1`}>
-					{tag.name}
-				</div>
+				<TagBadge key={tag.name} name={tag.name} color={tag.color} />
 			))}
 		</div>
 	);
