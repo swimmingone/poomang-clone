@@ -24,7 +24,7 @@ const useTodoListState = () => {
 				id: newID(),
 				title: data.title,
 				description: data.description,
-				tags: [],
+				tags: data.tags,
 				dueDate: data.dueDate,
 				creationDate: data.creationDate,
 				editDate: '',

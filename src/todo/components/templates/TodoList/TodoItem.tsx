@@ -58,7 +58,9 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 				</button>
 			</div>
 			<div className={'box-border px-16 leading-none text-base-300'}>{dueDate}</div>
-			<TagList tags={tags} />
+			<div className={'box-border px-16 py-1'}>
+				<TagList tags={tags} />
+			</div>
 			{isModalVisible && (
 				<DeleteModal
 					id={id}

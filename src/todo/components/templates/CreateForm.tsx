@@ -28,9 +28,13 @@ const CreateForm = () => {
 		isDone: false,
 	});
 
-	const onClickSubmit = () => {
-		addTodo(data);
-		router.push('/');
+	const isValidTag = (value: string) => {
+		return !tags.filter((tag) => tag.name === value).length;
+	};
+
+	const addTag = () => {
+		if (isValidTag(tagInput)) setTags([...tags, { name: tagInput, color: '' }]);
+		else alert('같은 이름의 태그가 존재합니다.');
 	};
 
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -40,13 +44,10 @@ const CreateForm = () => {
 		}
 	};
 
-	const isValidTag = (value: string) => {
-		return !!tags.filter((tag) => tag.name === value).length;
-	};
-
-	const addTag = () => {
-		if (isValidTag(tagInput)) setTags([...tags, { name: tagInput, color: '' }]);
-		else alert('같은 이름의 태그가 존재합니다.');
+	const onClickSubmit = () => {
+		console.log(tags);
+		addTodo({ ...data, tags: tags });
+		router.push('/');
 	};
 
 	useEffect(() => {
@@ -73,7 +74,9 @@ const CreateForm = () => {
 			</FormItem>
 			<FormItem label={'태그'}>
 				<>
-					<TagList tags={tags} />
+					<div className={'pb-2'}>
+						<TagList tags={tags} />
+					</div>
 					<input
 						name={'tag'}
 						type={'text'}
@@ -82,9 +85,7 @@ const CreateForm = () => {
 						onChange={(e) => setTagInput(e.target.value)}
 						onKeyPress={(e) => onTagEnter(e)}
 					/>
-					{!data.title && (
-						<p className={'text-sm'}>*Enter 키를 입력하면 태그가 생성됩니다.</p>
-					)}
+					<p className={'text-sm'}>*Enter 키를 입력하면 태그가 생성됩니다.</p>
 				</>
 			</FormItem>
 			<FormItem label={'상세설명'}>
