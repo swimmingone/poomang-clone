@@ -30,20 +30,33 @@ const CreateForm = () => {
 		isDone: false,
 	});
 
-	const isValidTag = (value: string) => {
-		return !tags.filter((tag) => tag.name === value).length;
+	const isValidTag = (newTag: Tag) => {
+		let isValid = true;
+		if (tags.filter((tag) => tag.name === newTag.name).length) {
+			alert('같은 이름의 태그가 존재합니다.');
+			isValid = false;
+		}
+		if (tagColor === null) {
+			alert('태그 색상을 선택하지 않았습니다.');
+			isValid = false;
+		}
+		if (!tagNameInput) {
+			alert('태그 이름이 입력되지 않았습니다.');
+			isValid = false;
+		}
+		return isValid;
 	};
 
-	const addTag = () => {
-		const newTag = { name: tagNameInput, color: tagColor };
-		if (!isValidTag(tagNameInput)) alert('같은 이름의 태그가 존재합니다.');
-		else if (tagColor === null) alert('태그 색상을 선택하지 않았습니다.');
+	const addTag = (newTag: Tag) => {
+		if (!isValidTag(newTag)) return;
 		else setTags([...tags, newTag]);
 	};
 
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			!tagNameInput ? alert('태그 이름이 입력되지 않았습니다.') : addTag();
+			const newTag = { name: tagNameInput, color: tagColor };
+			addTag(newTag);
+			setTagNameInput('');
 		}
 	};
 
