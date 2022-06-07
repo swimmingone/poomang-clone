@@ -5,16 +5,18 @@ import SubmitButton from '../molecules/SubmitButton';
 import useInputs from '../../../hooks/useInputs';
 import useUnloadAlert from '../../../hooks/useUnloadAlert';
 import useTodoListState from '../../store/useTodoListState';
-import { Tag } from '../../types/Tag';
+import { Tag, TagColor } from '../../types/Tag';
 import TagList from '../organisms/TagList';
 import dayjs from 'dayjs';
+import TagColorRadio from '../molecules/TagColorRadio';
 
 const CreateForm = () => {
 	const router = useRouter();
 	const { addTodo } = useTodoListState();
 	const { enablePrevent, disablePrevent } = useUnloadAlert();
 	const [tags, setTags] = useState<Tag[]>([]);
-	const [tagInput, setTagInput] = useState('');
+	const [tagNameInput, setTagNameInput] = useState('');
+	const [tagColor, setTagColor] = useState<TagColor>(null);
 
 	const [data, onChangeData] = useInputs({
 		id: '',
@@ -33,19 +35,19 @@ const CreateForm = () => {
 	};
 
 	const addTag = () => {
-		if (isValidTag(tagInput)) setTags([...tags, { name: tagInput, color: '' }]);
-		else alert('같은 이름의 태그가 존재합니다.');
+		const newTag = { name: tagNameInput, color: tagColor };
+		if (!isValidTag(tagNameInput)) alert('같은 이름의 태그가 존재합니다.');
+		else if (tagColor === null) alert('태그 색상을 선택하지 않았습니다.');
+		else setTags([...tags, newTag]);
 	};
 
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			addTag();
-			setTagInput('');
+			!tagNameInput ? alert('태그 이름이 입력되지 않았습니다.') : addTag();
 		}
 	};
 
 	const onClickSubmit = () => {
-		console.log(tags);
 		addTodo({ ...data, tags: tags });
 		router.push('/');
 	};
@@ -73,20 +75,21 @@ const CreateForm = () => {
 				</>
 			</FormItem>
 			<FormItem label={'태그'}>
-				<>
-					<div className={'pb-2'}>
-						<TagList tags={tags} />
-					</div>
+				<div className={'flex flex-col gap-2'}>
+					<TagColorRadio setTagColor={setTagColor} />
 					<input
 						name={'tag'}
 						type={'text'}
 						className="input input-bordered input-sm"
-						value={tagInput}
-						onChange={(e) => setTagInput(e.target.value)}
+						value={tagNameInput}
+						onChange={(e) => setTagNameInput(e.target.value)}
 						onKeyPress={(e) => onTagEnter(e)}
 					/>
-					<p className={'text-sm'}>*Enter 키를 입력하면 태그가 생성됩니다.</p>
-				</>
+					<p className={'text-sm'}>
+						*색상을 선택하고 Enter 키를 입력하면 태그가 생성됩니다.
+					</p>
+					<TagList tags={tags} />
+				</div>
 			</FormItem>
 			<FormItem label={'상세설명'}>
 				<textarea

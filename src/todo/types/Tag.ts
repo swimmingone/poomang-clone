@@ -3,4 +3,4 @@ export type Tag = {
 	color: TagColor;
 };
 
-export type TagColor = '' | 'info' | 'success' | 'warning' | 'error';
+export type TagColor = null | '' | 'info' | 'success' | 'warning' | 'error';
