@@ -8,7 +8,7 @@ const TodoListFilters = () => {
 	};
 
 	return (
-		<div className={'dropdown-hover dropdown-end dropdown-right dropdown'}>
+		<div className={'dropdown dropdown-right'}>
 			<label tabIndex={0} className="btn btn-ghost btn-xs">
 				Filter
 			</label>
