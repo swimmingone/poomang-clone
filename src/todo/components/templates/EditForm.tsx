@@ -46,6 +46,10 @@ const EditForm = ({ selectedTodo }: Prop) => {
 		else setTags([...tags, newTag]);
 	};
 
+	const removeTag = (name: string) => {
+		setTags(tags.filter((tag) => tag.name != name));
+	};
+
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			const newTag = { name: tagNameInput, color: tagColor };
@@ -101,7 +105,7 @@ const EditForm = ({ selectedTodo }: Prop) => {
 					<p className={'text-sm'}>
 						*색상을 선택하고 Enter 키를 입력하면 태그가 생성됩니다.
 					</p>
-					<TagList tags={tags} />
+					<TagList tags={tags} removeTag={removeTag} />
 				</div>
 			</FormItem>
 			<FormItem label={'상세설명'}>

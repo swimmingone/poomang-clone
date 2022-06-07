@@ -4,13 +4,14 @@ import TagBadge from '../molecules/TagBadge';
 
 interface Props {
 	tags: Tag[];
+	removeTag?: (name: string) => void;
 }
 
-const TagList = ({ tags }: Props) => {
+const TagList = ({ tags, removeTag }: Props) => {
 	return (
 		<div className={'flex flex-wrap gap-1'}>
 			{tags.map((tag) => (
-				<TagBadge key={tag.name} name={tag.name} color={tag.color} />
+				<TagBadge key={tag.name} name={tag.name} color={tag.color} removeTag={removeTag} />
 			))}
 		</div>
 	);
