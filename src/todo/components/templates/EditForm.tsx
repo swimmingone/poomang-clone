@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import FormItem from '../organisms/FormItem';
-import useTodoListState from '../../hooks/useTodoListState';
 import SubmitButton from '../molecules/SubmitButton';
-import { Todo } from '../../types/Todo';
-import dayjs from 'dayjs';
-import useUnloadAlert from '../../../utils/useUnloadAlert';
 import TagColorRadio from '../molecules/TagColorRadio';
 import TagList from '../organisms/TagList';
 import { Tag, TagColor } from '../../types/Tag';
+import { Todo } from '../../types/Todo';
+import dayjs from 'dayjs';
 
 interface Prop {
 	selectedTodo: Todo;
+	editTodo: (data: Todo) => void;
 }
 
-const EditForm = ({ selectedTodo }: Prop) => {
+const EditForm = ({ selectedTodo, editTodo }: Prop) => {
 	const router = useRouter();
-	const { editTodo } = useTodoListState();
-	const { enablePrevent, disablePrevent } = useUnloadAlert();
-
 	const [data, setData] = useState(selectedTodo);
 	const [tags, setTags] = useState<Tag[]>(selectedTodo.tags);
 	const [tagNameInput, setTagNameInput] = useState('');
@@ -43,11 +39,11 @@ const EditForm = ({ selectedTodo }: Prop) => {
 
 	const addTag = (newTag: Tag) => {
 		if (!isValidTag(newTag)) return;
-		else setTags([...tags, newTag]);
+		setTags([...tags, newTag]);
 	};
 
 	const removeTag = (name: string) => {
-		setTags(tags.filter((tag) => tag.name != name));
+		setTags(tags.filter((tag) => tag.name !== name));
 	};
 
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,16 +55,10 @@ const EditForm = ({ selectedTodo }: Prop) => {
 	};
 
 	const onClickSubmit = () => {
-		editTodo({ ...data, editDate: dayjs().format('YYYY/MM/DD hh:mm'), tags: tags });
+		const newTodo = { ...data, editDate: dayjs().format('YYYY/MM/DD hh:mm'), tags: tags };
+		editTodo(newTodo);
 		router.push('/');
 	};
-
-	useEffect(() => {
-		enablePrevent();
-		return () => {
-			disablePrevent();
-		};
-	}, [enablePrevent, disablePrevent]);
 
 	useEffect(() => {
 		if (!selectedTodo) return;
