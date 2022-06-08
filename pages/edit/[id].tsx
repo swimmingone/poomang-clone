@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PageTitle from '../../src/common/components/PageTitle';
-import useSelectedTodoState from '../../src/todo/store/useSelectedTodoState';
+import useSelectedTodoState from '../../src/todo/hooks/useSelectedTodoState';
 import EditForm from '../../src/todo/components/templates/EditForm';
 
 const EditTodo = () => {

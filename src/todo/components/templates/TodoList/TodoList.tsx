@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 import DeleteModal from '../../organisms/DeleteModal';
 import TodoListFilters from '../../organisms/TodoListFilters';
-import useTodoListFilterState from '../../../store/useTodoListFilterState';
+import useTodoListFilterState from '../../../hooks/useTodoListFilterState';
 
 const TodoList = () => {
 	const { filteredTodos } = useTodoListFilterState();

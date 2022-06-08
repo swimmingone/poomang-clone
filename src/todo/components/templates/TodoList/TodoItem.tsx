@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DeleteModal from '../../organisms/DeleteModal';
 import { Tag } from '../../../types/Tag';
 import { useRouter } from 'next/router';
-import useTodoListState from '../../../store/useTodoListState';
+import useTodoListState from '../../../hooks/useTodoListState';
 import dayjs from 'dayjs';
 import TagList from '../../organisms/TagList';
 

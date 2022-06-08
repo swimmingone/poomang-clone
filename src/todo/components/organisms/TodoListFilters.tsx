@@ -1,4 +1,4 @@
-import useTodoListFilterState from '../../store/useTodoListFilterState';
+import useTodoListFilterState from '../../hooks/useTodoListFilterState';
 
 const TodoListFilters = () => {
 	const { setFilter } = useTodoListFilterState();

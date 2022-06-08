@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import FormItem from '../organisms/FormItem';
-import useTodoListState from '../../store/useTodoListState';
+import useTodoListState from '../../hooks/useTodoListState';
 import SubmitButton from '../molecules/SubmitButton';
 import { Todo } from '../../types/Todo';
 import dayjs from 'dayjs';
-import useUnloadAlert from '../../../hooks/useUnloadAlert';
+import useUnloadAlert from '../../../utils/useUnloadAlert';
 import TagColorRadio from '../molecules/TagColorRadio';
 import TagList from '../organisms/TagList';
 import { Tag, TagColor } from '../../types/Tag';

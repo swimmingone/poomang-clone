@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { filteredTodoListState, todoListFilterState } from './todoListState';
+import { filteredTodoListState, todoListFilterState } from '../store/todoListState';
 
 const useTodoListFilterState = () => {
 	const filteredTodos = useRecoilValue(filteredTodoListState);

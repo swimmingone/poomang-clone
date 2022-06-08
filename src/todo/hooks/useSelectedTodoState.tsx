@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { selectedIdState, selectedTodoState } from './todoListState';
+import { selectedIdState, selectedTodoState } from '../store/todoListState';
 import { useCallback } from 'react';
 
 const useSelectedTodoState = () => {

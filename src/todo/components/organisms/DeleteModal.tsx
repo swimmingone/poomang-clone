@@ -1,5 +1,5 @@
 import React from 'react';
-import useTodoListState from '../../store/useTodoListState';
+import useTodoListState from '../../hooks/useTodoListState';
 
 interface Props {
 	id: string;

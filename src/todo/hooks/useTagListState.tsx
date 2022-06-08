@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { tagListState } from './tagListState';
+import { tagListState } from '../store/tagListState';
 import { Tag } from '../types/Tag';
 
 const useTagListState = () => {
