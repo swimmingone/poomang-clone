@@ -1,4 +1,4 @@
-### TodoList Project
+## TodoList
 
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></a>
@@ -19,4 +19,4 @@ yarn dev
 
 - EsLint, Prettier 설정 (tailwind prettier 플러그인 사용)
 - husky, lint-staged 로 pre-commit lint checking hook 설정
-
+- 도메인별 디렉토리 구조, atomic design 활용
