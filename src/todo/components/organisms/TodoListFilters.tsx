@@ -1,8 +1,10 @@
-import useTodoListFilterState from '../../hooks/useTodoListFilterState';
+import { SetterOrUpdater } from 'recoil';
 
-const TodoListFilters = () => {
-	const { setFilter } = useTodoListFilterState();
+interface Props {
+	setFilter: SetterOrUpdater<string>;
+}
 
+const TodoListFilters = ({ setFilter }: Props) => {
 	const updateFilter = (filter: string) => {
 		setFilter(filter);
 	};

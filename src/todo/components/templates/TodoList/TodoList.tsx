@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 import DeleteModal from '../../organisms/DeleteModal';
 import TodoListFilters from '../../organisms/TodoListFilters';
-import useTodoListFilterState from '../../../hooks/useTodoListFilterState';
+import { Todo } from '../../../types/Todo';
+import { SetterOrUpdater } from 'recoil';
 
-const TodoList = () => {
-	const { filteredTodos } = useTodoListFilterState();
+interface Props {
+	filteredTodos: Todo[];
+	setFilter: SetterOrUpdater<string>;
+}
 
+const TodoList = ({ filteredTodos, setFilter }: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
 		setIsModalVisible(!isModalVisible);
@@ -26,7 +30,7 @@ const TodoList = () => {
 	return (
 		<>
 			<div className={'box-border flex w-full justify-between py-2'}>
-				<TodoListFilters />
+				<TodoListFilters setFilter={setFilter} />
 				<button className={'btn btn-outline btn-error btn-xs'} onClick={onClickDelete}>
 					delete completed
 				</button>
@@ -35,7 +39,7 @@ const TodoList = () => {
 				id={''}
 				isItemModal={false}
 				isModalVisible={isModalVisible}
-				setIsModalVisible={setIsModalVisible}
+				onClose={() => setIsModalVisible(false)}
 			/>
 			<div className={'flex w-full flex-col'}>{todoList}</div>
 		</>
