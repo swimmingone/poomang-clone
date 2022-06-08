@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import FormItem from '../organisms/FormItem';
 import SubmitButton from '../molecules/SubmitButton';
 import useInputs from '../../../utils/useInputs';
-import useUnloadAlert from '../../../utils/useUnloadAlert';
-import useTodoListState from '../../hooks/useTodoListState';
+import { Todo } from '../../types/Todo';
 import { Tag, TagColor } from '../../types/Tag';
 import TagList from '../organisms/TagList';
-import dayjs from 'dayjs';
 import TagColorRadio from '../molecules/TagColorRadio';
+import dayjs from 'dayjs';
 
-const CreateForm = () => {
+interface Props {
+	addTodo: (data: Todo) => void;
+}
+
+const CreateForm = ({ addTodo }: Props) => {
 	const router = useRouter();
-	const { addTodo } = useTodoListState();
-	const { enablePrevent, disablePrevent } = useUnloadAlert();
-	const [tags, setTags] = useState<Tag[]>([]);
-	const [tagNameInput, setTagNameInput] = useState('');
-	const [tagColor, setTagColor] = useState<TagColor>(null);
-
 	const [data, onChangeData] = useInputs({
 		id: '',
 		title: '',
@@ -29,6 +26,9 @@ const CreateForm = () => {
 		doneDate: '',
 		isDone: false,
 	});
+	const [tags, setTags] = useState<Tag[]>([]);
+	const [tagNameInput, setTagNameInput] = useState('');
+	const [tagColor, setTagColor] = useState<TagColor>(null);
 
 	const isValidTag = (newTag: Tag) => {
 		let isValid = true;
@@ -49,11 +49,11 @@ const CreateForm = () => {
 
 	const addTag = (newTag: Tag) => {
 		if (!isValidTag(newTag)) return;
-		else setTags([...tags, newTag]);
+		setTags([...tags, newTag]);
 	};
 
 	const removeTag = (name: string) => {
-		setTags(tags.filter((tag) => tag.name != name));
+		setTags(tags.filter((tag) => tag.name !== name));
 	};
 
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -65,16 +65,10 @@ const CreateForm = () => {
 	};
 
 	const onClickSubmit = () => {
-		addTodo({ ...data, tags: tags });
+		const newTodo = { ...data, tags: tags };
+		addTodo(newTodo);
 		router.push('/');
 	};
-
-	useEffect(() => {
-		enablePrevent();
-		return () => {
-			disablePrevent();
-		};
-	}, [enablePrevent, disablePrevent]);
 
 	return (
 		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
