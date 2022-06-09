@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import DeleteModal from '../../organisms/DeleteModal';
+import Modal from '../../organisms/Modal';
 import { Tag } from '../../../types/Tag';
 import { useRouter } from 'next/router';
-import useTodoListState from '../../../hooks/useTodoListState';
 import dayjs from 'dayjs';
 import TagList from '../../organisms/TagList';
+import useTodoListState from '../../../hooks/useTodoListState';
 
 interface Props {
 	id: string;
@@ -16,13 +16,20 @@ interface Props {
 
 const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 	const router = useRouter();
-	const { toggleDone } = useTodoListState();
+	const { toggleDone, deleteTodo } = useTodoListState();
 	const now = dayjs().format('YYYY/MM/DD hh:mm');
 	const isUrgent = dayjs(dueDate, 'YYYY/MM/DD hh:mm').diff(now, 'm') <= 3 * 24 * 60;
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
-		setIsModalVisible(!isModalVisible);
+		setIsModalVisible(true);
+	};
+	const closeModal = () => {
+		setIsModalVisible(false);
+	};
+	const onClickModalOk = () => {
+		deleteTodo(id);
+		closeModal();
 	};
 
 	return (
@@ -62,11 +69,11 @@ const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
 				<TagList tags={tags} />
 			</div>
 			{isModalVisible && (
-				<DeleteModal
-					id={id}
-					isItemModal
-					isModalVisible={isModalVisible}
-					setIsModalVisible={setIsModalVisible}
+				<Modal
+					message={'정말로 삭제하시겠어요?'}
+					isVisible={isModalVisible}
+					onClose={closeModal}
+					onOk={onClickModalOk}
 				/>
 			)}
 		</div>

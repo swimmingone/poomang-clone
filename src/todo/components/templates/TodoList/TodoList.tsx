@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import TodoItem from './TodoItem';
-import DeleteModal from '../../organisms/DeleteModal';
+import Modal from '../../organisms/Modal';
 import TodoListFilters from '../../organisms/TodoListFilters';
 import { Todo } from '../../../types/Todo';
 import { SetterOrUpdater } from 'recoil';
+import useTodoListState from '../../../hooks/useTodoListState';
 
 interface Props {
 	filteredTodos: Todo[];
@@ -12,8 +13,16 @@ interface Props {
 
 const TodoList = ({ filteredTodos, setFilter }: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const { deleteAllDone } = useTodoListState();
 	const onClickDelete = () => {
-		setIsModalVisible(!isModalVisible);
+		setIsModalVisible(true);
+	};
+	const closeModal = () => {
+		setIsModalVisible(false);
+	};
+	const onClickModalOk = () => {
+		deleteAllDone();
+		closeModal();
 	};
 
 	const todoList = filteredTodos?.map((todo) => (
@@ -35,11 +44,11 @@ const TodoList = ({ filteredTodos, setFilter }: Props) => {
 					delete completed
 				</button>
 			</div>
-			<DeleteModal
-				id={''}
-				isItemModal={false}
-				isModalVisible={isModalVisible}
-				onClose={() => setIsModalVisible(false)}
+			<Modal
+				message={'완료된 할 일을 일괄 삭제합니다.'}
+				isVisible={isModalVisible}
+				onClose={closeModal}
+				onOk={onClickModalOk}
 			/>
 			<div className={'flex w-full flex-col'}>{todoList}</div>
 		</>
