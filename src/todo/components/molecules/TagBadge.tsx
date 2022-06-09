@@ -1,23 +1,20 @@
 import React from 'react';
 import { TagColor } from '../../types/Tag';
-import { useRouter } from 'next/router';
 
 interface Props {
 	name: string;
 	color: TagColor;
-	removeTag?: (name: string) => void;
+	onRemove?: (name: string) => void;
 }
 
-const TagBadge = ({ name, color, removeTag }: Props) => {
-	const router = useRouter();
-
+const TagBadge = ({ name, color, onRemove }: Props) => {
 	const onClickButton = () => {
-		if (removeTag) {
-			removeTag(name);
+		if (onRemove) {
+			onRemove(name);
 		}
 	};
 
-	return router.pathname === '/' ? (
+	return !onRemove ? (
 		<div className={`badge badge-${color}`}>{name}</div>
 	) : (
 		<div className={`badge badge-${color} flex gap-0.5`}>

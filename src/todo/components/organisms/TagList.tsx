@@ -11,7 +11,7 @@ const TagList = ({ tags, removeTag }: Props) => {
 	return (
 		<div className={'flex flex-wrap gap-1'}>
 			{tags.map((tag) => (
-				<TagBadge key={tag.name} name={tag.name} color={tag.color} removeTag={removeTag} />
+				<TagBadge key={tag.name} name={tag.name} color={tag.color} onRemove={removeTag} />
 			))}
 		</div>
 	);
