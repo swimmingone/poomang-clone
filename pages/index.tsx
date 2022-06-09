@@ -7,14 +7,14 @@ import useTodoListFilterState from '../src/todo/hooks/useTodoListFilterState';
 import useTodoListState from '../src/todo/hooks/useTodoListState';
 
 const Home: NextPage = () => {
-	const { filteredTodos, setFilter } = useTodoListFilterState();
+	const { filteredTodos, changeFilter } = useTodoListFilterState();
 	const { toggleDone, deleteTodo, deleteAllDone } = useTodoListState();
 
 	return (
 		<>
 			<PageTitle title={'Todo-list'} />
 			<TodoList
-				setFilter={setFilter}
+				changeFilter={changeFilter}
 				filteredTodos={filteredTodos}
 				toggleDone={toggleDone}
 				deleteTodo={deleteTodo}

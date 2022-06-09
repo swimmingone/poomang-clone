@@ -3,17 +3,22 @@ import TodoItem from './TodoItem';
 import Modal from '../../organisms/Modal';
 import TodoListFilters from '../../organisms/TodoListFilters';
 import { Todo } from '../../../types/Todo';
-import { SetterOrUpdater } from 'recoil';
 
 interface Props {
 	filteredTodos: Todo[];
-	setFilter: SetterOrUpdater<string>;
+	changeFilter: (filter: string) => void;
 	toggleDone: (id: string) => void;
 	deleteTodo: (id: string) => void;
 	deleteAllDone: () => void;
 }
 
-const TodoList = ({ filteredTodos, setFilter, toggleDone, deleteTodo, deleteAllDone }: Props) => {
+const TodoList = ({
+	filteredTodos,
+	changeFilter,
+	toggleDone,
+	deleteTodo,
+	deleteAllDone,
+}: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
 		setIsModalVisible(true);
@@ -42,7 +47,7 @@ const TodoList = ({ filteredTodos, setFilter, toggleDone, deleteTodo, deleteAllD
 	return (
 		<>
 			<div className={'box-border flex w-full justify-between py-2'}>
-				<TodoListFilters setFilter={setFilter} />
+				<TodoListFilters changeFilter={changeFilter} />
 				<button className={'btn btn-outline btn-error btn-xs'} onClick={onClickDelete}>
 					delete completed
 				</button>

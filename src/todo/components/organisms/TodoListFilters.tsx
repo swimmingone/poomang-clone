@@ -1,14 +1,8 @@
-import { SetterOrUpdater } from 'recoil';
-
 interface Props {
-	setFilter: SetterOrUpdater<string>;
+	changeFilter: (filter: string) => void;
 }
 
-const TodoListFilters = ({ setFilter }: Props) => {
-	const updateFilter = (filter: string) => {
-		setFilter(filter);
-	};
-
+const TodoListFilters = ({ changeFilter }: Props) => {
 	return (
 		<div className={'dropdown dropdown-right'}>
 			<label tabIndex={0} className="btn btn-ghost btn-xs">
@@ -19,17 +13,17 @@ const TodoListFilters = ({ setFilter }: Props) => {
 				className="dropdown-content menu rounded-box w-40 bg-base-100 p-2 shadow"
 			>
 				<li>
-					<button type="button" onClick={() => updateFilter('Show All')}>
+					<button type="button" onClick={() => changeFilter('Show All')}>
 						All
 					</button>
 				</li>
 				<li>
-					<button type="button" onClick={() => updateFilter('Show Done')}>
+					<button type="button" onClick={() => changeFilter('Show Done')}>
 						Done
 					</button>
 				</li>
 				<li>
-					<button type="button" onClick={() => updateFilter('Show Undone')}>
+					<button type="button" onClick={() => changeFilter('Show Undone')}>
 						Undone
 					</button>
 				</li>
