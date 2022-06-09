@@ -4,7 +4,6 @@ import { Tag } from '../../../types/Tag';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import TagList from '../../organisms/TagList';
-import useTodoListState from '../../../hooks/useTodoListState';
 
 interface Props {
 	id: string;
@@ -12,11 +11,12 @@ interface Props {
 	tags: Tag[];
 	isDone: boolean;
 	dueDate: string;
+	toggleDone: (id: string) => void;
+	deleteTodo: (id: string) => void;
 }
 
-const TodoItem = ({ id, title, tags, isDone, dueDate }: Props) => {
+const TodoItem = ({ id, title, tags, isDone, dueDate, toggleDone, deleteTodo }: Props) => {
 	const router = useRouter();
-	const { toggleDone, deleteTodo } = useTodoListState();
 	const now = dayjs().format('YYYY/MM/DD hh:mm');
 	const isUrgent = dayjs(dueDate, 'YYYY/MM/DD hh:mm').diff(now, 'm') <= 3 * 24 * 60;
 

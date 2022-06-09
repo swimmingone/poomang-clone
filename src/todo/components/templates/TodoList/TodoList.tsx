@@ -4,16 +4,17 @@ import Modal from '../../organisms/Modal';
 import TodoListFilters from '../../organisms/TodoListFilters';
 import { Todo } from '../../../types/Todo';
 import { SetterOrUpdater } from 'recoil';
-import useTodoListState from '../../../hooks/useTodoListState';
 
 interface Props {
 	filteredTodos: Todo[];
 	setFilter: SetterOrUpdater<string>;
+	toggleDone: (id: string) => void;
+	deleteTodo: (id: string) => void;
+	deleteAllDone: () => void;
 }
 
-const TodoList = ({ filteredTodos, setFilter }: Props) => {
+const TodoList = ({ filteredTodos, setFilter, toggleDone, deleteTodo, deleteAllDone }: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const { deleteAllDone } = useTodoListState();
 	const onClickDelete = () => {
 		setIsModalVisible(true);
 	};
@@ -33,6 +34,8 @@ const TodoList = ({ filteredTodos, setFilter }: Props) => {
 			isDone={todo.isDone}
 			dueDate={todo.dueDate}
 			tags={todo.tags}
+			toggleDone={toggleDone}
+			deleteTodo={deleteTodo}
 		/>
 	));
 
