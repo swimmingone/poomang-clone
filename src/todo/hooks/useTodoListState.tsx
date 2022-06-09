@@ -1,61 +1,72 @@
 import { useRecoilState } from 'recoil';
 import { todoListState } from '../store/todoListState';
 import { Todo } from '../types/Todo';
+import { useCallback } from 'react';
 
 const useTodoListState = () => {
 	const [todos, setTodos] = useRecoilState(todoListState);
 
-	const toggleDone = (id: string) => {
-		const index = todos.findIndex((todo) => todo.id === id);
-		const item = todos.find((todo) => todo.id == id);
-		if (!item) return;
-		const newList = replaceItemAtIndex(todos, index, {
-			...item,
-			isDone: !item.isDone,
-		});
+	const toggleDone = useCallback(
+		(id: string) => {
+			const index = todos.findIndex((todo) => todo.id === id);
+			const item = todos.find((todo) => todo.id == id);
+			if (!item) return;
+			const newList = replaceItemAtIndex(todos, index, {
+				...item,
+				isDone: !item.isDone,
+			});
 
-		setTodos(newList);
-	};
+			setTodos(newList);
+		},
+		[todos, setTodos],
+	);
 
-	const addTodo = (data: Todo) => {
-		const newList = [
-			...todos,
-			{
-				id: newID(),
-				title: data.title,
-				description: data.description,
-				tags: data.tags,
-				dueDate: data.dueDate,
-				creationDate: data.creationDate,
-				editDate: '',
-				doneDate: '',
-				isDone: false,
-			},
-		];
-		setTodos(newList);
-	};
+	const addTodo = useCallback(
+		(data: Todo) => {
+			const newList = [
+				...todos,
+				{
+					id: newID(),
+					title: data.title,
+					description: data.description,
+					tags: data.tags,
+					dueDate: data.dueDate,
+					creationDate: data.creationDate,
+					editDate: '',
+					doneDate: '',
+					isDone: false,
+				},
+			];
+			setTodos(newList);
+		},
+		[todos, setTodos],
+	);
 
-	const editTodo = (data: Todo) => {
-		const index = todos.findIndex((todo) => todo.id === data.id);
-		const newList = replaceItemAtIndex(todos, index, data);
-		setTodos(newList);
-	};
+	const editTodo = useCallback(
+		(data: Todo) => {
+			const index = todos.findIndex((todo) => todo.id === data.id);
+			const newList = replaceItemAtIndex(todos, index, data);
+			setTodos(newList);
+		},
+		[todos, setTodos],
+	);
 
-	const deleteTodo = (id: string) => {
-		const index = todos.findIndex((todo) => todo.id === id);
-		const newList = removeItemAtIndex(todos, index);
-		setTodos(newList);
-	};
-
-	const deleteAllDone = () => {
+	const deleteTodo = useCallback(
+		(id: string) => {
+			const index = todos.findIndex((todo) => todo.id === id);
+			const newList = removeItemAtIndex(todos, index);
+			setTodos(newList);
+		},
+		[todos, setTodos],
+	);
+	const deleteAllDone = useCallback(() => {
 		const newList = todos.filter((todo) => !todo.isDone);
 		setTodos(newList);
-	};
+	}, [todos, setTodos]);
 
 	return {
 		todos,
 		toggleDone,
-		setTodos,
 		addTodo,
 		editTodo,
 		deleteTodo,
