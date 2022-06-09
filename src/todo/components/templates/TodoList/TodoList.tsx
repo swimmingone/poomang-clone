@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TodoItem from './TodoItem';
-import Modal from '../../organisms/Modal';
+import Modal from 'src/common/components/Modal';
 import TodoListFilters from '../../organisms/TodoListFilters';
 import CircleButton from '../../molecules/CircleButton';
 import { Todo } from '../../../types/Todo';

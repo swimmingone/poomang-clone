@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from '../../organisms/Modal';
+import Modal from 'src/common/components/Modal';
 import { Tag } from '../../../types/Tag';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';

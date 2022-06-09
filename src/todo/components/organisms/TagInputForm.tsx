@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tag, TagColor } from '../../types/Tag';
 import TagColorRadio from './TagColorRadio';
-import FormItem from './FormItem';
+import FormItem from 'src/common/components/FormItem';
 
 interface Props {
 	tags: Tag[];

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import FormItem from '../organisms/FormItem';
+import FormItem from 'src/common/components/FormItem';
 import TagInputForm from '../organisms/TagInputForm';
 import SubmitButton from '../molecules/SubmitButton';
 import { Tag } from '../../types/Tag';
