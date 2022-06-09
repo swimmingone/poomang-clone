@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import FormItem from '../organisms/FormItem';
-import TagForm from '../organisms/TagForm';
+import TagInputForm from '../organisms/TagInputForm';
 import SubmitButton from '../molecules/SubmitButton';
 import useInputs from '../../../utils/useInputs';
 import { Todo } from '../../types/Todo';
 import { Tag } from '../../types/Tag';
 import dayjs from 'dayjs';
+import TagList from '../organisms/TagList';
 
 interface Props {
 	addTodo: (data: Todo) => void;
@@ -26,6 +27,10 @@ const CreateForm = ({ addTodo }: Props) => {
 		isDone: false,
 	});
 	const [tags, setTags] = useState<Tag[]>([]);
+
+	const removeTag = (name: string) => {
+		setTags(tags.filter((tag) => tag.name !== name));
+	};
 
 	const onClickSubmit = () => {
 		const newTodo = { ...data, tags: tags };
@@ -48,7 +53,6 @@ const CreateForm = ({ addTodo }: Props) => {
 					)}
 				</>
 			</FormItem>
-			<TagForm tags={tags} setTags={setTags} />
 			<FormItem label={'상세설명'}>
 				<textarea
 					name={'description'}
@@ -57,6 +61,10 @@ const CreateForm = ({ addTodo }: Props) => {
 					onChange={onChangeData}
 				/>
 			</FormItem>
+			<FormItem label={'태그 목록'}>
+				<TagList tags={tags} removeTag={removeTag} />
+			</FormItem>
+			<TagInputForm tags={tags} setTags={setTags} />
 			<FormItem label={'마감목표일'}>
 				<input
 					name={'dueDate'}

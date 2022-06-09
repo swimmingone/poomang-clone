@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Tag, TagColor } from '../../types/Tag';
 import TagColorRadio from './TagColorRadio';
-import TagList from './TagList';
 import FormItem from './FormItem';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 	setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
 }
 
-const TagForm = ({ tags, setTags }: Props) => {
+const TagInputForm = ({ tags, setTags }: Props) => {
 	const [tagNameInput, setTagNameInput] = useState('');
 	const [tagColor, setTagColor] = useState<TagColor>(null);
 
@@ -35,10 +34,6 @@ const TagForm = ({ tags, setTags }: Props) => {
 		setTags([...tags, newTag]);
 	};
 
-	const removeTag = (name: string) => {
-		setTags(tags.filter((tag) => tag.name !== name));
-	};
-
 	const onTagEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			const newTag = { name: tagNameInput, color: tagColor };
@@ -48,8 +43,8 @@ const TagForm = ({ tags, setTags }: Props) => {
 	};
 
 	return (
-		<FormItem label={'태그'}>
-			<div className={'flex flex-col gap-2'}>
+		<FormItem label={'태그 만들기'}>
+			<div className={'box-border flex flex-col gap-2 border p-2'}>
 				<TagColorRadio setTagColor={setTagColor} />
 				<input
 					name={'tag'}
@@ -60,10 +55,9 @@ const TagForm = ({ tags, setTags }: Props) => {
 					onKeyPress={(e) => onTagEnter(e)}
 				/>
 				<p className={'text-sm'}>*색상을 선택하고 Enter 키를 입력하면 태그가 생성됩니다.</p>
-				<TagList tags={tags} removeTag={removeTag} />
 			</div>
 		</FormItem>
 	);
 };
 
-export default TagForm;
+export default TagInputForm;
