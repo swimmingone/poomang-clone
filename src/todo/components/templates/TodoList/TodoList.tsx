@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 import Modal from '../../organisms/Modal';
 import TodoListFilters from '../../organisms/TodoListFilters';
+import CircleButton from '../../molecules/CircleButton';
 import { Todo } from '../../../types/Todo';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 	toggleDone: (id: string) => void;
 	deleteTodo: (id: string) => void;
 	deleteAllDone: () => void;
+	goCreate: () => void;
 }
 
 const TodoList = ({
@@ -18,6 +20,7 @@ const TodoList = ({
 	toggleDone,
 	deleteTodo,
 	deleteAllDone,
+	goCreate,
 }: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
@@ -59,6 +62,9 @@ const TodoList = ({
 				onOk={onClickModalOk}
 			/>
 			<div className={'flex w-full flex-col'}>{todoList}</div>
+			<div className={'box-border flex'}>
+				<CircleButton name={'+'} onClick={goCreate} />
+			</div>
 		</>
 	);
 };

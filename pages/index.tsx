@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import TodoList from '../src/todo/components/templates/TodoList/TodoList';
-import CircleButton from '../src/todo/components/molecules/CircleButton';
 import React from 'react';
 import PageTitle from '../src/common/components/PageTitle';
 import useTodoListFilterState from '../src/todo/hooks/useTodoListFilterState';
@@ -12,7 +11,7 @@ const Home: NextPage = () => {
 	const { filteredTodos, changeFilter } = useTodoListFilterState();
 	const { toggleDone, deleteTodo, deleteAllDone } = useTodoListState();
 
-	const moveToCreatePage = () => {
+	const goCreate = () => {
 		router.push('/create');
 	};
 
@@ -25,8 +24,8 @@ const Home: NextPage = () => {
 				toggleDone={toggleDone}
 				deleteTodo={deleteTodo}
 				deleteAllDone={deleteAllDone}
+				goCreate={goCreate}
 			/>
-			<CircleButton name={'+'} onClick={moveToCreatePage} />
 		</>
 	);
 };
