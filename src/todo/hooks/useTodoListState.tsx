@@ -46,7 +46,10 @@ const useTodoListState = () => {
 	const editTodo = useCallback(
 		(data: Todo) => {
 			const index = todos.findIndex((todo) => todo.id === data.id);
-			const newList = replaceItemAtIndex(todos, index, data);
+			const newList = replaceItemAtIndex(todos, index, {
+				...data,
+				editDate: dayjs().format('YYYY/MM/DD hh:mm'),
+			});
 			setTodos(newList);
 		},
 		[todos, setTodos],

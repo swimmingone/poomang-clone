@@ -20,7 +20,8 @@ export const selectedTodoState = selector({
 	get: ({ get }) => {
 		const todoList = get(todoListState);
 		const selectedId = get(selectedIdState);
-		return todoList.find((todo) => todo.id === selectedId);
+		const selectedTodo = todoList.find((todo) => todo.id === selectedId);
+		return selectedTodo ? selectedTodo : null;
 	},
 });
 

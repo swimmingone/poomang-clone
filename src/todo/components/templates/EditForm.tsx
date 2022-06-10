@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import FormItem from 'src/common/components/FormItem';
 import TagInputForm from '../organisms/TagInputForm';
 import SubmitButton from '../molecules/SubmitButton';
 import { Tag } from '../../types/Tag';
 import { Todo } from '../../types/Todo';
-import dayjs from 'dayjs';
 import TagList from '../organisms/TagList';
 
 interface Prop {
-	selectedTodo: Todo;
-	editTodo: (data: Todo) => void;
+	tags: Tag[];
+	setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+	removeTag: (name: string) => void;
+	data: Todo;
+	setData: React.Dispatch<React.SetStateAction<Todo | null>>;
+	onClickSubmit: () => void;
 }
 
-const EditForm = ({ selectedTodo, editTodo }: Prop) => {
-	const router = useRouter();
-	const [data, setData] = useState(selectedTodo);
-	const [tags, setTags] = useState<Tag[]>(selectedTodo.tags);
-
-	const removeTag = (name: string) => {
-		setTags(tags.filter((tag) => tag.name !== name));
-	};
-
-	const onClickSubmit = () => {
-		const newTodo = { ...data, editDate: dayjs().format('YYYY/MM/DD hh:mm'), tags: tags };
-		editTodo(newTodo);
-		router.push('/');
-	};
-
-	useEffect(() => {
-		if (!selectedTodo) return;
-		setData(selectedTodo);
-	}, [selectedTodo]);
-
+const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Prop) => {
 	return (
 		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
