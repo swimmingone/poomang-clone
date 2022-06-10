@@ -1,12 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageTitle from '../src/common/components/PageTitle';
 import CreateForm from '../src/todo/components/templates/CreateForm';
 import useUnloadAlert from '../src/utils/useUnloadAlert';
 import useTodoListState from '../src/todo/hooks/useTodoListState';
+import { useRouter } from 'next/router';
+import useInputs from '../src/utils/useInputs';
+import { Tag } from '../src/todo/types/Tag';
+import { Todo } from '../src/todo/types/Todo';
 
 const CreateTodo = () => {
-	const { enablePrevent, disablePrevent } = useUnloadAlert();
+	const { enablePrevent, disablePrevent, block } = useUnloadAlert();
 	const { addTodo } = useTodoListState();
+
+	const router = useRouter();
+	const [data, onChangeData] = useInputs<Todo>({
+		id: '',
+		title: '',
+		description: '',
+		tags: [],
+		dueDate: '',
+		creationDate: '',
+		editDate: '',
+		doneDate: '',
+		isDone: false,
+	});
+	const [tags, setTags] = useState<Tag[]>([]);
+
+	const removeTag = (name: string) => {
+		setTags(tags.filter((tag) => tag.name !== name));
+	};
+
+	const onClickSubmit = () => {
+		const newTodo = { ...data, tags: tags };
+		addTodo(newTodo);
+		router.push('/');
+	};
 
 	useEffect(() => {
 		enablePrevent();
@@ -15,10 +43,21 @@ const CreateTodo = () => {
 		};
 	}, [enablePrevent, disablePrevent]);
 
+	useEffect(() => {
+		(data.title || data.description || data.dueDate || tags.length) && block();
+	}, [data, tags, block]);
+
 	return (
 		<>
 			<PageTitle title={'Create Todo'} />
-			<CreateForm addTodo={addTodo} />
+			<CreateForm
+				tags={tags}
+				setTags={setTags}
+				removeTag={removeTag}
+				data={data}
+				onChangeData={onChangeData}
+				onClickSubmit={onClickSubmit}
+			/>
 		</>
 	);
 };

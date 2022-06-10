@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 import { todoListState } from '../store/todoListState';
 import { Todo } from '../types/Todo';
 import { useCallback } from 'react';
+import dayjs from 'dayjs';
 
 const useTodoListState = () => {
 	const [todos, setTodos] = useRecoilState(todoListState);
@@ -31,7 +32,7 @@ const useTodoListState = () => {
 					description: data.description,
 					tags: data.tags,
 					dueDate: data.dueDate,
-					creationDate: data.creationDate,
+					creationDate: dayjs().format('YYYY/MM/DD hh:mm'),
 					editDate: '',
 					doneDate: '',
 					isDone: false,
