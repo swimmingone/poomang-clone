@@ -31,17 +31,21 @@ const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Pr
 					{!data.title && (
 						<p className={'text-sm text-red-600'}>*필수 입력 항목입니다.</p>
 					)}
+					<p className={'text-sm text-gray-300'}>{data.title.length} / 20</p>
 				</>
 			</FormItem>
 			<FormItem label={'상세설명'}>
-				<textarea
-					name={'description'}
-					rows={4}
-					className="textarea textarea-bordered w-full"
-					value={data.description}
-					onChange={(e) => setData({ ...data, description: e.target.value })}
-					maxLength={250}
-				/>
+				<>
+					<textarea
+						name={'description'}
+						rows={4}
+						className="textarea textarea-bordered w-full"
+						value={data.description}
+						onChange={(e) => setData({ ...data, description: e.target.value })}
+						maxLength={250}
+					/>
+					<p className={'text-sm text-gray-300'}>{data.description.length} / 250</p>
+				</>
 			</FormItem>
 			<FormItem label={'태그 목록'}>
 				<TagList tags={tags} removeTag={removeTag} />
