@@ -26,6 +26,7 @@ const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Pr
 						className="input input-bordered input-sm"
 						value={data.title}
 						onChange={(e) => setData({ ...data, title: e.target.value })}
+						maxLength={20}
 					/>
 					{!data.title && (
 						<p className={'text-sm text-red-600'}>*필수 입력 항목입니다.</p>
@@ -39,6 +40,7 @@ const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Pr
 					className="textarea textarea-bordered w-full"
 					value={data.description}
 					onChange={(e) => setData({ ...data, description: e.target.value })}
+					maxLength={250}
 				/>
 			</FormItem>
 			<FormItem label={'태그 목록'}>

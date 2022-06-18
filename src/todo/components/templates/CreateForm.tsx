@@ -17,7 +17,7 @@ interface Props {
 
 const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmit }: Props) => {
 	return (
-		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
+		<form className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
 				<>
 					<input
@@ -25,6 +25,7 @@ const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmi
 						type={'text'}
 						className="input input-bordered input-sm"
 						onChange={onChangeData}
+						maxLength={20}
 					/>
 					{!data.title && (
 						<p className={'text-sm text-red-600'}>*필수 입력 항목입니다.</p>
@@ -37,6 +38,7 @@ const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmi
 					rows={4}
 					className="textarea textarea-bordered w-full"
 					onChange={onChangeData}
+					maxLength={250}
 				/>
 			</FormItem>
 			<FormItem label={'태그 목록'}>
@@ -52,7 +54,7 @@ const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmi
 				/>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
-		</div>
+		</form>
 	);
 };
 
