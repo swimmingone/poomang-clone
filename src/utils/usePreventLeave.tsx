@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const useUnloadAlert = () => {
+const usePreventLeave = () => {
 	const [isBlocking, setIsBlocking] = useState(false);
 
 	const block = () => {
@@ -20,4 +20,4 @@ const useUnloadAlert = () => {
 	return { enablePrevent, disablePrevent, block };
 };
 
-export default useUnloadAlert;
+export default usePreventLeave;

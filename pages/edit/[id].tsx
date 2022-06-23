@@ -4,11 +4,11 @@ import PageTitle from '../../src/common/components/PageTitle';
 import EditForm from '../../src/todo/components/templates/EditForm';
 import useSelectedTodoState from '../../src/todo/hooks/useSelectedTodoState';
 import useTodoListState from '../../src/todo/hooks/useTodoListState';
-import useUnloadAlert from '../../src/utils/useUnloadAlert';
+import usePreventLeave from '../../src/utils/usePreventLeave';
 import { Tag } from '../../src/todo/types/Tag';
 
 const EditTodo = () => {
-	const { enablePrevent, disablePrevent, block } = useUnloadAlert();
+	const { enablePrevent, disablePrevent, block } = usePreventLeave();
 	const { editTodo } = useTodoListState();
 	const { getTodoById, selectedTodo } = useSelectedTodoState();
 	const router = useRouter();

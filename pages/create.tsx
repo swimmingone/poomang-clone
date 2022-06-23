@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageTitle from '../src/common/components/PageTitle';
 import CreateForm from '../src/todo/components/templates/CreateForm';
-import useUnloadAlert from '../src/utils/useUnloadAlert';
+import usePreventLeave from '../src/utils/usePreventLeave';
 import useTodoListState from '../src/todo/hooks/useTodoListState';
 import { useRouter } from 'next/router';
 import useInputs from '../src/utils/useInputs';
@@ -9,7 +9,7 @@ import { Tag } from '../src/todo/types/Tag';
 import { Todo } from '../src/todo/types/Todo';
 
 const CreateTodo = () => {
-	const { enablePrevent, disablePrevent, block } = useUnloadAlert();
+	const { enablePrevent, disablePrevent, block } = usePreventLeave();
 	const { addTodo } = useTodoListState();
 
 	const router = useRouter();
