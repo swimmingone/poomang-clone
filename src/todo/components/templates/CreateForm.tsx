@@ -17,7 +17,7 @@ interface Props {
 
 const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmit }: Props) => {
 	return (
-		<form className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
+		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
 				<>
 					<input
@@ -58,7 +58,7 @@ const CreateForm = ({ tags, setTags, removeTag, data, onChangeData, onClickSubmi
 				/>
 			</FormItem>
 			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
-		</form>
+		</div>
 	);
 };
 
