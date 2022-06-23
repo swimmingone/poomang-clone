@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PageTitle from '../../src/common/components/PageTitle';
-import EditForm from '../../src/todo/components/templates/EditForm';
 import useSelectedTodoState from '../../src/todo/hooks/useSelectedTodoState';
 import useTodoListState from '../../src/todo/hooks/useTodoListState';
 import usePreventLeave from '../../src/utils/usePreventLeave';
 import { Tag } from '../../src/todo/types/Tag';
+import TodoForm from '../../src/todo/components/templates/TodoForm';
 
 const EditTodo = () => {
 	const { enablePrevent, disablePrevent, block } = usePreventLeave();
@@ -21,12 +21,12 @@ const EditTodo = () => {
 		setTags(tags.filter((tag) => tag.name !== name));
 	};
 
-	const onClickSubmit = () => {
+	const onSubmit = () => {
 		if (data) {
 			const newTodo = { ...data, tags: tags };
 			editTodo(newTodo);
 		} else {
-			alert('수정되지 않았습니다.');
+			alert('할 일이 수정되지 않았습니다.');
 		}
 		router.push('/');
 	};
@@ -71,13 +71,17 @@ const EditTodo = () => {
 	return (
 		<>
 			<PageTitle title={'Todo Detail'} />
-			<EditForm
+			<div className={'flex w-full justify-end gap-4 px-4 py-2'}>
+				<div className={'label-text'}>생성일 : {data.creationDate}</div>
+				<div className={'label-text'}>수정일 : {data.editDate}</div>
+			</div>
+			<TodoForm
 				tags={tags}
 				setTags={setTags}
 				removeTag={removeTag}
 				data={data}
 				setData={setData}
-				onClickSubmit={onClickSubmit}
+				onSubmit={onSubmit}
 			/>
 		</>
 	);

@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface Prop {
-	onSubmit: () => void;
+	onClick: () => void;
 	disabled: boolean;
 }
 
-const SubmitButton = ({ onSubmit, disabled }: Prop) => {
+const SubmitButton = ({ onClick, disabled }: Prop) => {
 	return (
-		<button type="submit" className={'btn btn-primary'} onClick={onSubmit} disabled={disabled}>
+		<button type="submit" className={'btn btn-primary'} onClick={onClick} disabled={disabled}>
 			제출하기
 		</button>
 	);

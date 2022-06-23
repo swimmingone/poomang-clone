@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PageTitle from '../src/common/components/PageTitle';
-import CreateForm from '../src/todo/components/templates/CreateForm';
 import usePreventLeave from '../src/utils/usePreventLeave';
 import useTodoListState from '../src/todo/hooks/useTodoListState';
 import { useRouter } from 'next/router';
-import useInputs from '../src/utils/useInputs';
 import { Tag } from '../src/todo/types/Tag';
 import { Todo } from '../src/todo/types/Todo';
+import TodoForm from '../src/todo/components/templates/TodoForm';
 
 const CreateTodo = () => {
 	const { enablePrevent, disablePrevent, block } = usePreventLeave();
 	const { addTodo } = useTodoListState();
 
 	const router = useRouter();
-	const [data, onChangeData] = useInputs<Todo>({
+	const initialTodo = {
 		id: '',
 		title: '',
 		description: '',
@@ -23,16 +22,21 @@ const CreateTodo = () => {
 		editDate: '',
 		doneDate: '',
 		isDone: false,
-	});
+	};
+	const [data, setData] = useState<Todo | null>(initialTodo);
 	const [tags, setTags] = useState<Tag[]>([]);
 
 	const removeTag = (name: string) => {
 		setTags(tags.filter((tag) => tag.name !== name));
 	};
 
-	const onClickSubmit = () => {
-		const newTodo = { ...data, tags: tags };
-		addTodo(newTodo);
+	const onSubmit = () => {
+		if (data) {
+			const newTodo = { ...data, tags: tags };
+			addTodo(newTodo);
+		} else {
+			alert('할 일이 생성되지 않았습니다.');
+		}
 		router.push('/');
 	};
 
@@ -44,19 +48,20 @@ const CreateTodo = () => {
 	}, [enablePrevent, disablePrevent]);
 
 	useEffect(() => {
-		(data.title || data.description || data.dueDate || tags.length) && block();
-	}, [data, tags, block]);
+		data !== initialTodo && block();
+	}, [data, initialTodo, tags, block]);
 
+	if (!data) return null;
 	return (
 		<>
 			<PageTitle title={'Create Todo'} />
-			<CreateForm
+			<TodoForm
 				tags={tags}
 				setTags={setTags}
 				removeTag={removeTag}
 				data={data}
-				onChangeData={onChangeData}
-				onClickSubmit={onClickSubmit}
+				setData={setData}
+				onSubmit={onSubmit}
 			/>
 		</>
 	);

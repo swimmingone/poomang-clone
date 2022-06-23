@@ -12,10 +12,10 @@ interface Prop {
 	removeTag: (name: string) => void;
 	data: Todo;
 	setData: React.Dispatch<React.SetStateAction<Todo | null>>;
-	onClickSubmit: () => void;
+	onSubmit: () => void;
 }
 
-const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Prop) => {
+const TodoForm = ({ tags, setTags, removeTag, data, setData, onSubmit }: Prop) => {
 	return (
 		<div className={'box-border flex w-full flex-col items-center justify-between gap-4 p-4'}>
 			<FormItem label={'할 일'}>
@@ -60,11 +60,9 @@ const EditForm = ({ tags, setTags, removeTag, data, setData, onClickSubmit }: Pr
 					onChange={(e) => setData({ ...data, dueDate: e.target.value })}
 				/>
 			</FormItem>
-			<FormItem label={'생성일'}>{data.creationDate}</FormItem>
-			<FormItem label={'수정일'}>{data.editDate}</FormItem>
-			<SubmitButton onSubmit={onClickSubmit} disabled={data.title === ''} />
+			<SubmitButton onClick={onSubmit} disabled={data.title === ''} />
 		</div>
 	);
 };
 
-export default EditForm;
+export default TodoForm;
