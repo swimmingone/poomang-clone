@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PageTitle from '../src/common/components/PageTitle';
 import usePreventLeave from '../src/common/hooks/usePreventLeave';
-import useTodoListState from '../src/todo/hooks/useTodoListState';
 import { useRouter } from 'next/router';
 import { Tag } from '../src/todo/types/Tag';
 import { Todo } from '../src/todo/types/Todo';
 import TodoForm from '../src/todo/components/templates/TodoForm';
+import { TodoContext } from '../src/todo/provider/TodoProvider';
 
 const CreateTodo = () => {
 	const { enablePrevent, disablePrevent, block } = usePreventLeave();
-	const { addTodo } = useTodoListState();
+	const { onCreate } = useContext(TodoContext);
 
 	const router = useRouter();
 	const initialTodo = {
@@ -33,7 +33,7 @@ const CreateTodo = () => {
 	const onSubmit = () => {
 		if (data) {
 			const newTodo = { ...data, tags: tags };
-			addTodo(newTodo);
+			onCreate(newTodo);
 		} else {
 			alert('할 일이 생성되지 않았습니다.');
 		}
