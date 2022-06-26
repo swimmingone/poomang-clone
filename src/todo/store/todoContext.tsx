@@ -1,15 +1,5 @@
 import React from 'react';
 
-const TodoContext = React.createContext({
-	id: '',
-	title: '',
-	description: '',
-	tags: [],
-	dueDate: '',
-	creationDate: '',
-	editDate: '',
-	doneDate: '',
-	isDone: false,
-});
+const TodoListContext = React.createContext([]);
 
-export default TodoContext;
+export default TodoListContext;
