@@ -5,6 +5,7 @@ import React, {
 	useCallback,
 	useEffect,
 	useReducer,
+	useState,
 } from 'react';
 import TodoReducer from './TodoReducer';
 import { Todo } from '../types/Todo';
@@ -13,6 +14,9 @@ const initialState: Todo[] = [];
 
 interface TodoContextType {
 	todos: Todo[];
+	filter: string;
+	filteredTodos: Todo[];
+	onChangeFilter: (filter: string) => void;
 	getTodoById: (id: string) => Todo | null;
 	onToggle: (id: string) => void;
 	onCreate: (data: Todo) => void;
@@ -23,6 +27,9 @@ interface TodoContextType {
 
 export const TodoContext = createContext<TodoContextType>({
 	todos: [],
+	filter: 'Show All',
+	filteredTodos: [],
+	onChangeFilter: () => {},
 	getTodoById: () => null,
 	onToggle: () => {},
 	onCreate: () => {},
@@ -37,6 +44,26 @@ interface Prop {
 
 const TodoProvider = ({ children }: Prop) => {
 	const [state, dispatch] = useReducer(TodoReducer, initialState);
+	const [filter, setFilter] = useState('Show All');
+	const [filteredTodos, setFilteredTodos] = useState(state);
+
+	const filterTodo = useCallback((filter: string, state: Todo[]): Todo[] => {
+		switch (filter) {
+			case 'Show Done':
+				return state.filter((item) => item.isDone);
+			case 'Show Undone':
+				return state.filter((item) => !item.isDone);
+			default:
+				return state;
+		}
+	}, []);
+
+	const onChangeFilter = useCallback(
+		(filter: string) => {
+			setFilter(filter);
+		},
+		[setFilter],
+	);
 
 	const getTodoById = useCallback(
 		(id: string) => {
@@ -94,10 +121,17 @@ const TodoProvider = ({ children }: Prop) => {
 		}
 	}, [state]);
 
+	useEffect(() => {
+		setFilteredTodos(filterTodo(filter, state));
+	}, [state, filter, filterTodo]);
+
 	return (
 		<TodoContext.Provider
 			value={{
 				todos: state,
+				filter,
+				filteredTodos,
+				onChangeFilter,
 				getTodoById,
 				onToggle,
 				onCreate,
