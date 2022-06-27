@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PageTitle from '../../src/common/components/PageTitle';
-import useSelectedTodoState from '../../src/todo/hooks/useSelectedTodoState';
-import useTodoListState from '../../src/todo/hooks/useTodoListState';
 import usePreventLeave from '../../src/common/hooks/usePreventLeave';
 import { Tag } from '../../src/todo/types/Tag';
 import TodoForm from '../../src/todo/components/templates/TodoForm';
+import { TodoContext } from '../../src/todo/provider/TodoProvider';
+import { Todo } from '../../src/todo/types/Todo';
 
 const EditTodo = () => {
 	const { enablePrevent, disablePrevent, block } = usePreventLeave();
-	const { editTodo } = useTodoListState();
-	const { getTodoById, selectedTodo } = useSelectedTodoState();
+	const { onEdit, getTodoById } = useContext(TodoContext);
 	const router = useRouter();
 	const id = router.query.id;
-
-	const [data, setData] = useState(selectedTodo);
+	const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+	const [data, setData] = useState<Todo | null>(null);
 	const [tags, setTags] = useState<Tag[]>([]);
 
 	const removeTag = (name: string) => {
@@ -24,7 +23,7 @@ const EditTodo = () => {
 	const onSubmit = () => {
 		if (data) {
 			const newTodo = { ...data, tags: tags };
-			editTodo(newTodo);
+			onEdit(newTodo);
 		} else {
 			alert('할 일이 수정되지 않았습니다.');
 		}
@@ -33,24 +32,12 @@ const EditTodo = () => {
 
 	useEffect(() => {
 		if (typeof id === 'string') {
-			getTodoById(id);
+			setSelectedTodo(getTodoById(id));
 		}
 	}, [getTodoById, id]);
 
 	useEffect(() => {
-		if (!selectedTodo) {
-			setData({
-				id: '',
-				title: '',
-				description: '',
-				tags: [],
-				dueDate: '',
-				creationDate: '',
-				editDate: '',
-				doneDate: '',
-				isDone: false,
-			});
-		} else {
+		if (selectedTodo) {
 			setData(selectedTodo);
 			setTags(selectedTodo.tags);
 		}

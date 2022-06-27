@@ -4,22 +4,21 @@ import removeItemAtIndex from '../../utils/removeItemAtIndex';
 import newID from '../../utils/newId';
 import dayjs from 'dayjs';
 
-type UseTodosAction = {
+type TodosAction = {
 	type: string;
 	id?: string;
 	payload?: Todo;
 	value?: Todo[];
 };
 
-export default function reducer(state: Todo[], action: UseTodosAction): Todo[] {
-	const { type, id, payload, value } = action;
-	const targetIndex = state.findIndex((todo) => todo.id === id);
-	const targetTodo = state.find((todo) => todo.id === id);
+export default function reducer(state: Todo[], action: TodosAction): Todo[] {
+	const targetIndex = state.findIndex((todo) => todo.id === action.id);
+	const targetTodo = state.find((todo) => todo.id === action.id);
 
-	switch (type) {
+	switch (action.type) {
 		case 'INIT_STORED':
-			if (!value) return [];
-			return value;
+			if (!action.value) return [];
+			return action.value;
 
 		case 'TOGGLE_DONE':
 			if (!targetTodo) return state;
@@ -29,16 +28,15 @@ export default function reducer(state: Todo[], action: UseTodosAction): Todo[] {
 			});
 
 		case 'CREATE_TODO':
-			if (!payload) return state;
-			console.log(payload);
+			if (!action.payload) return state;
 			return [
 				...state,
 				{
 					id: newID(),
-					title: payload.title,
-					description: payload.description,
-					tags: payload.tags,
-					dueDate: payload.dueDate,
+					title: action.payload.title,
+					description: action.payload.description,
+					tags: action.payload.tags,
+					dueDate: action.payload.dueDate,
 					creationDate: dayjs().format('YYYY/MM/DD hh:mm'),
 					editDate: '',
 					doneDate: '',
@@ -46,9 +44,11 @@ export default function reducer(state: Todo[], action: UseTodosAction): Todo[] {
 				},
 			];
 		case 'EDIT_TODO':
-			if (!targetTodo || !payload) return state;
+			console.log(targetIndex, action.payload);
+			if (!targetTodo || !action.payload) return state;
+			console.log(action.payload);
 			return replaceItemAtIndex<Todo>(state, targetIndex, {
-				...payload,
+				...action.payload,
 				editDate: dayjs().format('YYYY/MM/DD hh:mm'),
 			});
 		case 'DELETE_TODO':

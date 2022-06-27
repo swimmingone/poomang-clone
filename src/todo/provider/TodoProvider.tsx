@@ -13,7 +13,7 @@ const initialState: Todo[] = [];
 
 interface TodoContextType {
 	todos: Todo[];
-	selectedTodo?: Todo;
+	getTodoById: (id: string) => Todo | null;
 	onToggle: (id: string) => void;
 	onCreate: (data: Todo) => void;
 	onEdit: (data: Todo) => void;
@@ -23,6 +23,7 @@ interface TodoContextType {
 
 export const TodoContext = createContext<TodoContextType>({
 	todos: [],
+	getTodoById: () => null,
 	onToggle: () => {},
 	onCreate: () => {},
 	onEdit: () => {},
@@ -36,6 +37,13 @@ interface Prop {
 
 const TodoProvider = ({ children }: Prop) => {
 	const [state, dispatch] = useReducer(TodoReducer, initialState);
+
+	const getTodoById = useCallback(
+		(id: string) => {
+			return state.find((todo) => todo.id === id) ?? null;
+		},
+		[state],
+	);
 
 	const onToggle = useCallback((id: string) => {
 		dispatch({
@@ -55,6 +63,7 @@ const TodoProvider = ({ children }: Prop) => {
 		dispatch({
 			type: 'EDIT_TODO',
 			payload: data,
+			id: data.id,
 		});
 	}, []);
 
@@ -89,6 +98,7 @@ const TodoProvider = ({ children }: Prop) => {
 		<TodoContext.Provider
 			value={{
 				todos: state,
+				getTodoById,
 				onToggle,
 				onCreate,
 				onEdit,
