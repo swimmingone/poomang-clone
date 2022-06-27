@@ -1,18 +1,15 @@
 import type { AppProps } from 'next/app';
 import '../src/common/styles/globals.css';
 import Layout from '../src/common/components/Layout';
-import { RecoilRoot } from 'recoil';
-import TodoContext from '../src/todo/store/todoContext';
+import TodoProvider from '../src/todo/provider/TodoProvider';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<TodoContext.Provider value={[]}>
-			<RecoilRoot>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</RecoilRoot>
-		</TodoContext.Provider>
+		<TodoProvider>
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</TodoProvider>
 	);
 }
 
