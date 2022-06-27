@@ -1,4 +1,11 @@
-import React, { createContext, ReactChild, ReactChildren, useCallback, useReducer } from 'react';
+import React, {
+	createContext,
+	ReactChild,
+	ReactChildren,
+	useCallback,
+	useEffect,
+	useReducer,
+} from 'react';
 import { Todo } from '../types/Todo';
 import dayjs from 'dayjs';
 import newID from '../../utils/newId';
@@ -9,28 +16,21 @@ type UseTodosAction = {
 	type: string;
 	id?: string;
 	payload?: Todo;
+	value?: Todo[];
 };
 
-const initialState: Todo[] = [
-	{
-		id: newID(),
-		title: 'data.title',
-		description: 'data.description',
-		tags: [],
-		dueDate: '',
-		creationDate: dayjs().format('YYYY/MM/DD hh:mm'),
-		editDate: '',
-		doneDate: '',
-		isDone: false,
-	},
-];
+const initialState: Todo[] = [];
 
 function reducer(state: Todo[], action: UseTodosAction): Todo[] {
-	const { type, id, payload } = action;
+	const { type, id, payload, value } = action;
 	const targetIndex = state.findIndex((todo) => todo.id === id);
 	const targetTodo = state.find((todo) => todo.id === id);
 
 	switch (type) {
+		case 'INIT_STORED':
+			if (!value) return [];
+			return value;
+
 		case 'TOGGLE_DONE':
 			if (!targetTodo) return state;
 			return replaceItemAtIndex<Todo>(state, targetIndex, {
@@ -129,6 +129,20 @@ const TodoProvider = ({ children }: Prop) => {
 			type: 'DELETE_ALL_DONE',
 		});
 	}, []);
+
+	useEffect(() => {
+		if (JSON.parse(localStorage.getItem('state') ?? '')) {
+			dispatch({
+				type: 'INIT_STORED',
+				value: JSON.parse(localStorage.getItem('state') ?? ''),
+			});
+		}
+	}, []);
+	useEffect(() => {
+		if (state !== initialState) {
+			localStorage.setItem('state', JSON.stringify(state));
+		}
+	}, [state]);
 
 	return (
 		<TodoContext.Provider
