@@ -108,10 +108,11 @@ const TodoProvider = ({ children }: Prop) => {
 	}, []);
 
 	useEffect(() => {
-		if (JSON.parse(localStorage.getItem('state') ?? '')) {
+		const loadedTodos = localStorage.getItem('state');
+		if (loadedTodos !== null) {
 			dispatch({
 				type: 'INIT_STORED',
-				value: JSON.parse(localStorage.getItem('state') ?? ''),
+				value: JSON.parse(loadedTodos),
 			});
 		}
 	}, []);
