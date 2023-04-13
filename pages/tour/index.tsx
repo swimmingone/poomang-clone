@@ -46,7 +46,8 @@ const Home: NextPage = () => {
 		}, 1000);
 		// tourStore를 의존성에 추가하면 무한로딩이 발생한다.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [tourStore.addData]);
+	}, []);
+
 	return (
 		<>
 			<ReactJoyride
@@ -55,6 +56,9 @@ const Home: NextPage = () => {
 				stepIndex={tourStore.currentStep}
 				steps={createAddTodoTourSteps(tourData)}
 				tooltipComponent={JoyrideTooltip}
+				floaterProps={{
+					disableAnimation: true,
+				}}
 			/>
 			<PageTitle title={'Todo-list'} />
 			<TourTodoList

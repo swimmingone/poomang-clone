@@ -2,7 +2,6 @@ import CircleButton from '../../../../../todo/components/molecules/CircleButton'
 import { Todo } from '../../../../../todo/types/Todo';
 import TodoListFilters from '../../../../../todo/components/organisms/TodoListFilters';
 import { useAddTodoTourStore } from '../../../stores/useAddTodoTourStore';
-import Modal from '../../../../../common/components/Modal';
 import React, { useEffect, useMemo, useState } from 'react';
 import TourTodoItem from './TourTodoItem';
 
@@ -22,23 +21,10 @@ const TourTodoList = ({
 	changeFilter,
 	toggleDone,
 	deleteTodo,
-	deleteAllDone,
 	goCreate,
 	isAdding,
 	setIsAdding,
 }: Props) => {
-	const [isModalVisible, setIsModalVisible] = useState(false);
-	const onClickDelete = () => {
-		setIsModalVisible(true);
-	};
-	const closeModal = () => {
-		setIsModalVisible(false);
-	};
-	const onClickModalOk = () => {
-		deleteAllDone();
-		closeModal();
-	};
-
 	const initialTodo = {
 		id: '',
 		title: '',
@@ -50,7 +36,7 @@ const TourTodoList = ({
 		doneDate: '',
 		isDone: false,
 	};
-	const [data, setData] = useState<Todo | null>(initialTodo);
+	const [data, setData] = useState<Todo>(initialTodo);
 
 	const todoList = todos?.map((todo) => (
 		<TourTodoItem
@@ -81,21 +67,12 @@ const TourTodoList = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [confirmDisabled, tourStore.nextStep]);
 
-	if (!data) return null;
 	return (
 		<>
 			<div className={'box-border flex w-full justify-between py-2'}>
 				<TodoListFilters changeFilter={changeFilter} />
-				<button className={'btn btn-outline btn-error btn-xs'} onClick={onClickDelete}>
-					delete completed
-				</button>
+				<button className={'btn btn-outline btn-error btn-xs'}>delete completed</button>
 			</div>
-			<Modal
-				message={'완료된 할 일을 일괄 삭제합니다.'}
-				isVisible={isModalVisible}
-				onClose={closeModal}
-				onOk={onClickModalOk}
-			/>
 			<div className={'flex w-full flex-col'} ref={tourStore.data?.todoList}>
 				{todoList}
 			</div>

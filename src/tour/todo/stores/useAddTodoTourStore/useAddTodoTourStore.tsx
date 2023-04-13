@@ -62,6 +62,7 @@ export const createAddTodoTourSteps = (
 		spotlightClicks: false,
 		spotlightPadding: 2,
 		disableCloseOnEsc: true,
+		placement: 'top',
 	},
 ];
 
