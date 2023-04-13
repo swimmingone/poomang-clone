@@ -3,25 +3,29 @@ import { Todo } from '../../../../../todo/types/Todo';
 import TodoListFilters from '../../../../../todo/components/organisms/TodoListFilters';
 import { useAddTodoTourStore } from '../../../stores/useAddTodoTourStore';
 import Modal from '../../../../../common/components/Modal';
-import { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import TourTodoItem from './TourTodoItem';
 
 interface Props {
-	filteredTodos: Todo[];
+	todos: Todo[];
 	changeFilter: (filter: string) => void;
 	toggleDone: (id: string) => void;
 	deleteTodo: (id: string) => void;
 	deleteAllDone: () => void;
 	goCreate: () => void;
+	isAdding?: boolean;
+	setIsAdding?: (isAdding: boolean) => void;
 }
 
 const TourTodoList = ({
-	filteredTodos,
+	todos,
 	changeFilter,
 	toggleDone,
 	deleteTodo,
 	deleteAllDone,
 	goCreate,
+	isAdding,
+	setIsAdding,
 }: Props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const onClickDelete = () => {
@@ -35,7 +39,20 @@ const TourTodoList = ({
 		closeModal();
 	};
 
-	const todoList = filteredTodos?.map((todo) => (
+	const initialTodo = {
+		id: '',
+		title: '',
+		description: '',
+		tags: [],
+		dueDate: '',
+		creationDate: '',
+		editDate: '',
+		doneDate: '',
+		isDone: false,
+	};
+	const [data, setData] = useState<Todo | null>(initialTodo);
+
+	const todoList = todos?.map((todo) => (
 		<TourTodoItem
 			key={todo.id}
 			id={todo.id}
@@ -48,7 +65,23 @@ const TourTodoList = ({
 		/>
 	));
 
+	const confirmDisabled: boolean = useMemo(() => {
+		return data?.title === '';
+	}, [data]);
+
 	const tourStore = useAddTodoTourStore();
+
+	useEffect(() => {
+		if (!confirmDisabled) {
+			setTimeout(() => {
+				tourStore.nextStep();
+			}, 1000);
+		}
+		// tourStore를 의존성에 추가하면 무한로딩이 발생한다.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [confirmDisabled, tourStore.nextStep]);
+
+	if (!data) return null;
 	return (
 		<>
 			<div className={'box-border flex w-full justify-between py-2'}>
@@ -63,10 +96,37 @@ const TourTodoList = ({
 				onClose={closeModal}
 				onOk={onClickModalOk}
 			/>
-			<div className={'flex w-full flex-col'}>{todoList}</div>
+			<div className={'flex w-full flex-col'} ref={tourStore.data?.todoList}>
+				{todoList}
+			</div>
 			<div className={'box-border flex'} ref={tourStore.data?.addTodoButton}>
 				<CircleButton name={'+'} onClick={goCreate} />
 			</div>
+			{isAdding && (
+				<div className={'flex h-3 gap-2 pt-4'}>
+					<input
+						ref={tourStore.data?.todoInput}
+						name={'title'}
+						type={'text'}
+						className="input input-bordered input-sm"
+						value={data?.title}
+						onChange={(e) => setData(data && { ...data, title: e.target.value })}
+						maxLength={20}
+					/>
+					<button
+						ref={tourStore.data?.submitButton}
+						className={'btn btn-primary btn-sm'}
+						onClick={() => {
+							tourStore.data?.updateTodoData?.([data]);
+							tourStore.nextStep();
+							setIsAdding?.(false);
+						}}
+						disabled={confirmDisabled}
+					>
+						확인
+					</button>
+				</div>
+			)}
 		</>
 	);
 };

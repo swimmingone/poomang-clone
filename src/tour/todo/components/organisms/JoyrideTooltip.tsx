@@ -25,20 +25,24 @@ const JoyrideTooltip = (props: TooltipRenderProps): JSX.Element => {
 			{step.hideFooter || (
 				<div className={'mt-1 flex justify-between'}>
 					<div>
-						{!isLastStep && (
+						{!isLastStep && step.showSkipButton && (
 							<button {...skipProps} className={'border-0 bg-transparent'}>
 								건너뛰기
 							</button>
 						)}
 					</div>
 					<div>
-						{index > 0 && (
+						{index > 0 && !step.hideBackButton && (
 							<button {...backProps} className={'border-0 bg-transparent'}>
 								뒤로
 							</button>
 						)}
 						<button {...primaryProps}>
-							{continuous ? `다음 (${index + 1}/${size})` : 'Close'}
+							{continuous
+								? step.showProgress
+									? `다음 ${index + 1}/${size}`
+									: '다음'
+								: '닫기'}
 						</button>
 					</div>
 				</div>
